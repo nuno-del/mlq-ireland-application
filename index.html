@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Language Quest – Ireland Programme Application</title>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Fira+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#003366; --red:#B12900; --green:#4C9E0C;
+    --navy-light:#e8eef5; --red-light:#fdf0ec; --green-light:#f0f8e8;
+    --grey:#f5f5f5; --grey-mid:#e0e0e0; --text:#1a1a1a; --muted:#555;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Fira Sans',sans-serif;font-size:14px;line-height:1.6;color:var(--text);background:#f8f9fb;}
+
+  /* HEADER */
+  .site-header{background:var(--navy);position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,51,102,.3);}
+  .header-inner{max-width:980px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .logo-area{display:flex;align-items:center;gap:12px;}
+  .logo-icon{width:42px;height:42px;flex-shrink:0;}
+  .brand{font-family:'Josefin Sans',sans-serif;font-size:17px;font-weight:700;letter-spacing:.04em;color:#fff;display:block;line-height:1;}
+  .tagline{font-family:'Josefin Sans',sans-serif;font-size:9px;letter-spacing:.12em;color:rgba(255,255,255,.6);text-transform:uppercase;display:block;}
+  .hdr-right{text-align:right;}
+  .hdr-badge{font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.25);padding:4px 10px;border-radius:3px;display:inline-block;}
+  .hdr-id{font-family:'Josefin Sans',sans-serif;font-size:11px;color:rgba(255,255,255,.55);margin-top:3px;}
+
+  /* HERO */
+  .hero{background:linear-gradient(135deg,var(--navy) 0%,#004a99 100%);color:#fff;padding:32px 24px;text-align:center;}
+  .hero h1{font-family:'Josefin Sans',sans-serif;font-size:24px;font-weight:700;letter-spacing:.02em;margin-bottom:6px;}
+  .hero .sub-en{font-size:13px;color:rgba(255,255,255,.75);max-width:520px;margin:0 auto 4px;}
+  .hero .sub-es{font-size:12px;color:rgba(255,255,255,.5);max-width:520px;margin:0 auto;font-style:italic;}
+  .dest-pill{display:inline-flex;align-items:center;gap:6px;margin-top:14px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 14px;font-size:11px;font-family:'Josefin Sans',sans-serif;letter-spacing:.06em;text-transform:uppercase;}
+
+  /* PROGRESS */
+  .prog-wrap{background:#fff;border-bottom:1px solid var(--grey-mid);padding:12px 24px;position:sticky;top:70px;z-index:90;}
+  .prog-inner{max-width:980px;margin:0 auto;display:flex;}
+  .ps{flex:1;text-align:center;font-size:9px;font-family:'Josefin Sans',sans-serif;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);position:relative;cursor:pointer;padding:5px 2px 0;}
+  .ps::before{content:attr(data-n);display:block;width:26px;height:26px;border-radius:50%;border:2px solid var(--grey-mid);margin:0 auto 3px;background:#fff;line-height:22px;font-family:'Josefin Sans',sans-serif;font-size:11px;font-weight:700;color:var(--muted);transition:all .2s;}
+  .ps:not(:last-child)::after{content:'';position:absolute;top:17px;left:calc(50% + 14px);right:calc(-50% + 14px);height:2px;background:var(--grey-mid);}
+  .ps.active{color:var(--navy);} .ps.active::before{background:var(--navy);border-color:var(--navy);color:#fff;}
+  .ps.done{color:var(--green);} .ps.done::before{background:var(--green);border-color:var(--green);color:#fff;}
+  .ps.done:not(:last-child)::after{background:var(--green);}
+
+  /* LAYOUT */
+  .form-wrap{max-width:980px;margin:0 auto;padding:28px 24px 60px;}
+  .form-section{display:none;animation:fi .3s ease;}
+  .form-section.active{display:block;}
+  @keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+  /* SECTION HEADER */
+  .sec-header{display:flex;align-items:center;gap:12px;margin-bottom:22px;padding-bottom:12px;border-bottom:3px solid var(--navy);}
+  .sec-icon{width:34px;height:34px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Josefin Sans',sans-serif;font-weight:700;font-size:15px;flex-shrink:0;}
+  .sec-header h2{font-family:'Josefin Sans',sans-serif;font-size:19px;font-weight:700;color:var(--navy);}
+  .sec-header .h-es{font-size:12px;color:var(--muted);font-style:italic;margin-top:1px;}
+
+  /* CARD */
+  .card{background:#fff;border-radius:8px;border:1px solid var(--grey-mid);padding:22px;margin-bottom:18px;}
+  .card-title{font-family:'Josefin Sans',sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--navy);margin-bottom:4px;padding-bottom:4px;}
+  .card-title-es{font-size:11px;color:var(--muted);font-style:italic;margin-bottom:14px;}
+
+  /* NOTICE */
+  .notice{border-radius:6px;padding:12px 14px;margin-bottom:16px;font-size:13px;line-height:1.6;}
+  .notice .n-es{font-size:11.5px;font-style:italic;color:inherit;opacity:.8;margin-top:3px;}
+  .notice.info{background:var(--navy-light);border-left:4px solid var(--navy);color:var(--navy);}
+  .notice.warn{background:var(--red-light);border-left:4px solid var(--red);color:#7a1c00;}
+  .notice.ok{background:var(--green-light);border-left:4px solid var(--green);color:#2a5800;}
+
+  /* FIELD */
+  .fg{display:grid;gap:13px;margin-bottom:13px;}
+  .fg.c1{grid-template-columns:1fr;}
+  .fg.c2{grid-template-columns:1fr 1fr;}
+  .fg.c3{grid-template-columns:1fr 1fr 1fr;}
+  .fg.c4{grid-template-columns:1fr 1fr 1fr 1fr;}
+  .field{display:flex;flex-direction:column;gap:3px;}
+  .field label .en{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);display:block;}
+  .field label .es{font-size:10.5px;font-style:italic;color:#888;display:block;margin-top:1px;}
+  .field label .req{color:var(--red);margin-left:2px;}
+
+  input[type=text],input[type=email],input[type=tel],input[type=date],input[type=number],select,textarea{
+    width:100%;border:1.5px solid var(--grey-mid);border-radius:5px;padding:8px 10px;
+    font-family:'Fira Sans',sans-serif;font-size:13.5px;color:var(--text);background:#fff;outline:none;
+    transition:border-color .2s,box-shadow .2s;appearance:none;
+  }
+  input:focus,select:focus,textarea:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(0,51,102,.1);}
+  textarea{resize:vertical;min-height:78px;}
+  select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23555' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;}
+
+  /* PILLS */
+  .opt-group{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px;}
+  .opt-pill{display:flex;align-items:center;gap:5px;cursor:pointer;padding:5px 12px;border:1.5px solid var(--grey-mid);border-radius:20px;font-size:13px;transition:all .15s;user-select:none;}
+  .opt-pill input{display:none;}
+  .opt-pill:hover{border-color:var(--navy);color:var(--navy);}
+  .opt-pill.sel{background:var(--navy);border-color:var(--navy);color:#fff;}
+
+  /* YES/NO */
+  .yn{display:flex;gap:7px;margin-top:4px;}
+  .yn-btn{padding:7px 18px;border:1.5px solid var(--grey-mid);border-radius:5px;font-size:13px;cursor:pointer;transition:all .15s;background:#fff;font-family:'Fira Sans',sans-serif;font-weight:500;}
+  .yn-btn:hover{border-color:var(--navy);color:var(--navy);}
+  .yn-btn.ya{background:var(--green);border-color:var(--green);color:#fff;}
+  .yn-btn.na{background:var(--red);border-color:var(--red);color:#fff;}
+  .cond{display:none;margin-top:9px;}
+  .cond.vis{display:block;}
+
+  /* SCALE */
+  .scale-g{display:flex;gap:5px;flex-wrap:wrap;margin-top:4px;}
+  .sc-btn{flex:1;min-width:56px;text-align:center;padding:6px 4px;border:1.5px solid var(--grey-mid);border-radius:5px;font-size:11.5px;cursor:pointer;transition:all .15s;user-select:none;background:#fff;font-family:'Fira Sans',sans-serif;}
+  .sc-btn:hover{border-color:var(--navy);color:var(--navy);}
+  .sc-btn.active-poor{background:#aaa;border-color:#aaa;color:#fff;}
+  .sc-btn.active-fair{background:#7a8fa6;border-color:#7a8fa6;color:#fff;}
+  .sc-btn.active-good{background:var(--navy);border-color:var(--navy);color:#fff;}
+  .sc-btn.active-excellent{background:var(--green);border-color:var(--green);color:#fff;}
+
+  /* HOBBIES */
+  .hobby-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:7px;}
+  .hobby-item{display:flex;align-items:center;justify-content:space-between;padding:7px 9px;background:var(--grey);border-radius:5px;border:1px solid var(--grey-mid);font-size:12.5px;}
+  .hobby-btns{display:flex;gap:3px;}
+  .hb{width:26px;height:22px;border:1px solid var(--grey-mid);border-radius:3px;font-size:10px;cursor:pointer;background:#fff;transition:all .12s;display:flex;align-items:center;justify-content:center;font-family:'Josefin Sans',sans-serif;font-weight:700;}
+  .hb:hover{border-color:var(--navy);color:var(--navy);}
+  .hb.hh{background:var(--green);border-color:var(--green);color:#fff;}
+  .hb.hl{background:var(--navy);border-color:var(--navy);color:#fff;}
+  .hb.hn{background:#aaa;border-color:#aaa;color:#fff;}
+
+  /* ADJECTIVES */
+  .adj-grid{display:flex;flex-wrap:wrap;gap:7px;}
+  .adj-chip{padding:5px 12px;border:1.5px solid var(--grey-mid);border-radius:20px;font-size:12.5px;cursor:pointer;transition:all .15s;user-select:none;background:#fff;}
+  .adj-chip:hover{border-color:var(--navy);color:var(--navy);}
+  .adj-chip.on{background:var(--navy);border-color:var(--navy);color:#fff;}
+
+  /* FREQ */
+  .freq-g{display:flex;gap:5px;flex-wrap:wrap;margin-top:4px;}
+  .fq-btn{padding:5px 10px;border:1.5px solid var(--grey-mid);border-radius:4px;font-size:11.5px;cursor:pointer;background:#fff;transition:all .15s;font-family:'Fira Sans',sans-serif;}
+  .fq-btn:hover{border-color:var(--navy);color:var(--navy);}
+  .fq-btn.on{background:var(--navy);border-color:var(--navy);color:#fff;}
+
+  /* TABLE */
+  .dt{width:100%;border-collapse:collapse;font-size:13px;}
+  .dt th{background:var(--navy);color:#fff;padding:8px 10px;text-align:left;font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:.06em;text-transform:uppercase;}
+  .dt th .th-es{font-size:9px;font-style:italic;font-weight:400;opacity:.8;display:block;margin-top:1px;letter-spacing:0;text-transform:none;}
+  .dt td{padding:6px 8px;border-bottom:1px solid var(--grey-mid);vertical-align:middle;}
+  .dt tr:nth-child(even) td{background:var(--grey);}
+  .dt input[type=text],.dt input[type=date],.dt input[type=number]{padding:5px 7px;font-size:13px;}
+
+  /* PHOTO */
+  .photo-drop{border:2px dashed var(--grey-mid);border-radius:8px;padding:28px;text-align:center;cursor:pointer;transition:all .2s;background:var(--grey);}
+  .photo-drop:hover{border-color:var(--navy);background:var(--navy-light);}
+  .photo-drop .upicon{font-size:28px;margin-bottom:6px;}
+  .photo-drop .en-t{font-size:13px;font-weight:600;color:var(--navy);}
+  .photo-drop .es-t{font-size:11.5px;color:var(--muted);font-style:italic;}
+  .photo-preview{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .photo-thumb{width:76px;height:76px;object-fit:cover;border-radius:5px;border:2px solid var(--grey-mid);}
+
+  /* SIGNATURE */
+  .sig-canvas{width:100%;height:110px;border:2px solid var(--grey-mid);border-radius:5px;cursor:crosshair;background:#fff;display:block;}
+
+  /* NAV */
+  .nav-btns{display:flex;justify-content:space-between;align-items:center;margin-top:28px;padding-top:18px;border-top:1px solid var(--grey-mid);}
+  .btn{font-family:'Josefin Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:10px 26px;border-radius:5px;border:none;cursor:pointer;transition:all .2s;}
+  .btn-pri{background:var(--navy);color:#fff;} .btn-pri:hover{background:#004a99;}
+  .btn-sec{background:#fff;color:var(--navy);border:1.5px solid var(--navy);} .btn-sec:hover{background:var(--navy-light);}
+  .btn-ok{background:var(--green);color:#fff;} .btn-ok:hover{background:#3d8a0a;}
+  .step-ct{font-size:11px;color:var(--muted);font-family:'Josefin Sans',sans-serif;}
+
+  /* SUB-DIVIDER */
+  .sub-div{font-family:'Josefin Sans',sans-serif;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--red);margin:18px 0 10px;display:flex;align-items:center;gap:8px;}
+  .sub-div::after{content:'';flex:1;height:1px;background:var(--red-light);}
+  .sub-div .es{font-style:italic;font-weight:400;text-transform:none;letter-spacing:0;color:#c0603a;}
+
+  /* GRADING BOXES */
+  .grade-ref{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:7px;}
+  .gr-box{padding:7px 10px;border-radius:5px;font-size:12.5px;}
+  .gr-box .en{font-weight:600;display:block;}
+  .gr-box .es{font-size:11px;font-style:italic;color:var(--muted);display:block;}
+
+  /* CONDITION ROW */
+  .cond-row{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--grey-mid);}
+  .cond-row:last-child{border-bottom:none;}
+  .cond-lbl{width:170px;flex-shrink:0;}
+  .cond-lbl .en{font-size:13px;font-weight:500;}
+  .cond-lbl .es{font-size:11px;font-style:italic;color:var(--muted);}
+  .cond-ctrl{display:flex;align-items:center;gap:8px;flex:1;flex-wrap:wrap;}
+
+  /* REVIEW */
+  .rv-sec{margin-bottom:18px;}
+  .rv-sec h3{font-family:'Josefin Sans',sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--navy);margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid var(--navy-light);}
+  .rv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px;}
+  .rv-item .rl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);}
+  .rv-item .rv{font-size:13px;margin-top:1px;}
+
+  /* SUCCESS */
+  .success-wrap{display:none;text-align:center;padding:56px 24px;}
+  .success-wrap.vis{display:block;}
+  .succ-icon{width:76px;height:76px;border-radius:50%;background:var(--green);color:#fff;font-size:34px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;}
+  .success-wrap h2{font-family:'Josefin Sans',sans-serif;font-size:22px;color:var(--navy);margin-bottom:6px;}
+  .success-wrap .en-p{color:var(--muted);max-width:460px;margin:0 auto;line-height:1.7;}
+  .success-wrap .es-p{color:#999;max-width:460px;margin:6px auto 0;font-style:italic;font-size:13px;line-height:1.7;}
+
+  .green-badge{display:inline-block;background:var(--green-light);color:var(--green);border:1px solid rgba(76,158,12,.3);font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600;margin-left:6px;}
+
+  /* SIBLING ROW */
+  .sib-row{display:grid;grid-template-columns:1fr 100px 130px 80px 40px;gap:8px;align-items:end;margin-bottom:8px;}
+
+  @media(max-width:640px){
+    .fg.c2,.fg.c3,.fg.c4{grid-template-columns:1fr;}
+    .ps{font-size:7px;}
+    .sib-row{grid-template-columns:1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo-area">
+      <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <rect x="8" y="8" width="60" height="60" fill="none" stroke="#B12900" stroke-width="7" rx="1"/>
+        <rect x="18" y="16" width="60" height="60" fill="none" stroke="#4C9E0C" stroke-width="5" rx="1" transform="rotate(6 48 46)"/>
+        <rect x="28" y="24" width="60" height="60" fill="none" stroke="#003366" stroke-width="7" rx="1" transform="rotate(-5 58 54)"/>
+      </svg>
+      <div>
+        <span class="brand">My Language Quest</span>
+        <span class="tagline">Explore · Learn · Grow</span>
+      </div>
+    </div>
+    <div class="hdr-right">
+      <div class="hdr-badge">Ireland Programme</div>
+      <div class="hdr-id">Application ID: MLQ-IRL-<span id="appNum"></span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <h1>Ireland Study Abroad – Application Form</h1>
+  <p class="sub-en">Take your time with each section — the more you share, the better we can match you with the right school and host family.</p>
+  <p class="sub-es">Tómate tu tiempo en cada sección — cuanto más compartas, mejor podemos encontrarte la escuela y familia anfitriona perfectas.</p>
+  <div class="dest-pill">🍀 IER Study · Ireland Programme</div>
+</div>
+
+<!-- ── PROGRESS ── -->
+<div class="prog-wrap">
+  <div class="prog-inner">
+    <div class="ps active" data-n="1" id="ps0" onclick="goTo(0)">Personal</div>
+    <div class="ps" data-n="2" id="ps1" onclick="goTo(1)">Family</div>
+    <div class="ps" data-n="3" id="ps2" onclick="goTo(2)">Education</div>
+    <div class="ps" data-n="4" id="ps3" onclick="goTo(3)">Health</div>
+    <div class="ps" data-n="5" id="ps4" onclick="goTo(4)">Lifestyle</div>
+    <div class="ps" data-n="6" id="ps5" onclick="goTo(5)">Academic</div>
+    <div class="ps" data-n="7" id="ps6" onclick="goTo(6)">Parents</div>
+    <div class="ps" data-n="8" id="ps7" onclick="goTo(7)">Review</div>
+  </div>
+</div>
+
+<div class="form-wrap">
+
+<!-- ══════════════════════════════════════════
+     SECTION 1 — PERSONAL INFORMATION
+══════════════════════════════════════════ -->
+<div class="form-section active" id="sec0">
+  <div class="sec-header">
+    <div class="sec-icon">1</div>
+    <div>
+      <h2>Personal Information</h2>
+      <div class="h-es">Información personal — complétala tú o tu tutor/a</div>
+    </div>
+  </div>
+
+  <div class="notice info">
+    <strong>Please Note</strong> — This section is to be completed by the student or their guardian. Use your legal name exactly as it appears on your passport.
+    <div class="n-es">Esta sección debe completarla el/la estudiante o su tutor/a. Usa tu nombre legal tal como aparece en el pasaporte.</div>
+  </div>
+
+  <!-- Cover photos -->
+  <div class="card">
+    <div class="card-title">Cover Photos</div>
+    <div class="card-title-es">Fotos de portada — sube 1–3 fotos que muestren tu personalidad (tú y tu familia, tu ciudad, tus hobbies)</div>
+    <div class="photo-drop" onclick="document.getElementById('photoInput').click()">
+      <div class="upicon">📸</div>
+      <div class="en-t">Click to upload photos</div>
+      <div class="es-t">Haz clic para subir tus fotos · JPG o PNG, máx. 5 MB cada una</div>
+    </div>
+    <input type="file" id="photoInput" accept="image/*" multiple style="display:none" onchange="previewPhotos(this)">
+    <div class="photo-preview" id="photoPreview"></div>
+  </div>
+
+  <!-- About you -->
+  <div class="card">
+    <div class="card-title">Tell Us About You</div>
+    <div class="card-title-es">Cuéntanos sobre ti</div>
+    <div class="fg c2">
+      <div class="field">
+        <label><span class="en">First Name (as on passport)<span class="req">*</span></span><span class="es">Nombre (como aparece en el pasaporte)</span></label>
+        <input type="text" id="firstName" placeholder="e.g. María">
+      </div>
+      <div class="field">
+        <label><span class="en">Surname / Last Name<span class="req">*</span></span><span class="es">Apellido(s)</span></label>
+        <input type="text" id="lastName" placeholder="e.g. García Ruiz">
+      </div>
+    </div>
+    <div class="fg c2">
+      <div class="field">
+        <label><span class="en">Middle Name(s)</span><span class="es">Segundo nombre (si aplica)</span></label>
+        <input type="text" id="middleName">
+      </div>
+      <div class="field">
+        <label><span class="en">Preferred Name</span><span class="es">Nombre por el que te gusta que te llamen</span></label>
+        <input type="text" id="preferredName">
+      </div>
+    </div>
+    <div class="fg c4">
+      <div class="field">
+        <label><span class="en">Gender</span><span class="es">Género</span></label>
+        <select id="gender"><option value="">Select / Selecciona</option><option>Male / Masculino</option><option>Female / Femenino</option><option>Non-binary</option><option>Prefer not to say</option></select>
+      </div>
+      <div class="field">
+        <label><span class="en">Date of Birth<span class="req">*</span></span><span class="es">Fecha de nacimiento</span></label>
+        <input type="date" id="dob">
+      </div>
+      <div class="field">
+        <label><span class="en">Height (cm)</span><span class="es">Altura en cm</span></label>
+        <input type="number" id="height" placeholder="e.g. 165">
+      </div>
+      <div class="field">
+        <label><span class="en">Weight (kg)</span><span class="es">Peso en kg</span></label>
+        <input type="number" id="weight" placeholder="e.g. 58">
+      </div>
+    </div>
+    <div class="fg c3">
+      <div class="field">
+        <label><span class="en">Citizenship</span><span class="es">Nacionalidad</span></label>
+        <input type="text" id="citizenship" placeholder="e.g. Spanish / Española">
+      </div>
+      <div class="field">
+        <label><span class="en">Country of Legal Residency</span><span class="es">País de residencia legal</span></label>
+        <input type="text" id="residency" value="Spain">
+      </div>
+      <div class="field">
+        <label><span class="en">Ethnicity (optional)</span><span class="es">Etnia (opcional)</span></label>
+        <input type="text" id="ethnicity">
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact info -->
+  <div class="card">
+    <div class="card-title">Your Contact Information</div>
+    <div class="card-title-es">Tu información de contacto</div>
+    <div class="fg c1">
+      <div class="field">
+        <label><span class="en">Home Street Address<span class="req">*</span></span><span class="es">Dirección postal completa</span></label>
+        <input type="text" id="address" placeholder="Calle, número, piso...">
+      </div>
+    </div>
+    <div class="fg c4">
+      <div class="field">
+        <label><span class="en">City<span class="req">*</span></span><span class="es">Ciudad</span></label>
+        <input type="text" id="city">
+      </div>
+      <div class="field">
+        <label><span class="en">State / Province</span><span class="es">Provincia / Comunidad</span></label>
+        <input type="text" id="state">
+      </div>
+      <div class="field">
+        <label><span class="en">Zip / Post Code</span><span class="es">Código postal</span></label>
+        <input type="text" id="postcode">
+      </div>
+      <div class="field">
+        <label><span class="en">Country</span><span class="es">País</span></label>
+        <input type="text" id="country" value="Spain">
+      </div>
+    </div>
+    <div class="fg c2">
+      <div class="field">
+        <label><span class="en">Mobile Phone<span class="req">*</span></span><span class="es">Teléfono móvil</span></label>
+        <input type="tel" id="mobile" placeholder="+34 6XX XXX XXX">
+      </div>
+      <div class="field">
+        <label><span class="en">Home Phone Number</span><span class="es">Teléfono fijo (si tienes)</span></label>
+        <input type="tel" id="homePhone">
+      </div>
+    </div>
+    <div class="fg c1">
+      <div class="field">
+        <label><span class="en">Email Address<span class="req">*</span></span><span class="es">Correo electrónico</span></label>
+        <input type="email" id="email" placeholder="estudiante@correo.com">
+      </div>
+    </div>
+    <div class="field">
+      <label><span class="en">Preferred Method of Contact</span><span class="es">¿Cómo prefieres que te contactemos?</span></label>
+      <div class="opt-group">
+        <label class="opt-pill" onclick="selPill(this,'contactM')"><input type="radio" name="contactM"> Mobile / Móvil</label>
+        <label class="opt-pill" onclick="selPill(this,'contactM')"><input type="radio" name="contactM"> Email</label>
+        <label class="opt-pill" onclick="selPill(this,'contactM')"><input type="radio" name="contactM"> Home Phone / Fijo</label>
+        <label class="opt-pill" onclick="selPill(this,'contactM')"><input type="radio" name="contactM"> Post / Correo postal</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Emergency contacts -->
+  <div class="card">
+    <div class="card-title">Emergency Contact Details <span class="green-badge">Must differ from parents · Deben ser distintos a los padres</span></div>
+    <div class="card-title-es">Contactos de emergencia — personas a las que llamar si no podemos contactar con tus tutores</div>
+    <div class="sub-div">Contact 1 <span class="es">· Contacto 1</span></div>
+    <div class="fg c2">
+      <div class="field">
+        <label><span class="en">Full Name</span><span class="es">Nombre completo</span></label>
+        <input type="text" id="ec1name">
+      </div>
+      <div class="field">
+        <label><span class="en">Relationship to Student</span><span class="es">Relación con el/la estudiante (p.ej. tío/a, amigo/a de la familia)</span></label>
+        <input type="text" id="ec1rel">
+      </div>
+    </div>
+    <div class="fg c2">
+      <div class="field">
+        <label><span class="en">Email Address</span><span class="es">Correo electrónico</span></label>
+        <input type="email" id="ec1email">
+      </div>
+      <div class="field">
+        <label><span class="en">Telephone Number</span><span class="es">Teléfono</span></label>
+        <input type="tel" id="ec1phone">
+      </div>
+    </div>
+    <div class="sub-div">Contact 2 <span class="es">· Contacto 2</span></div>
+    <div class="fg c2">
+      <div class="field">
+        <label><span class="en">Full Name</span><span class="es">Nombre completo</span></label>
+        <input type="text" id="ec2name">
+      </div>
+      <div class="field">
+        <label><span class="en">Relationship to Student</span><span class="es">Relación con el/la estudiante</span></label>
+        <input type="text" id="ec2rel">
+      </div>
+    </div>
+    <div class="fg c2">
+      <div class="field">
+        <label><span class="en">Email Address</span><span class="es">Correo electrónico</span></label>
+        <input type="email" id="ec2email">
+      </div>
+      <div class="field">
+        <label><span class="en">Telephone Number</span><span class="es">Teléfono</span></label>
+        <input type="tel" id="ec2phone">
+      </div>
+    </div>
+  </div>
+
+  <!-- Religious affiliation -->
+  <div class="card">
+    <div class="card-title">Your Religious Affiliation <span style="font-size:10px;font-weight:400;color:var(--muted)">(optional / opcional)</span></div>
+    <div class="card-title-es">Afiliación religiosa — intentaremos encontrar una familia con creencias similares, aunque no siempre es posible</div>
+    <div class="fg c2">
+      <div class="field">
+        <label><span class="en">Religion, if any</span><span class="es">Religión, si la tienes</span></label>
+        <input type="text" id="religion">
+      </div>
+      <div class="field">
+        <label><span class="en">How often do you attend structured religious services?</span><span class="es">¿Con qué frecuencia asistes a servicios religiosos?</span></label>
+        <input type="text" id="religFreq" placeholder="e.g. Weekly / Ocasionalmente / Nunca">
+      </div>
+    </div>
+    <div class="field">
+      <label><span class="en">If placed with a family of a different faith, is access to your own services required?</span><span class="es">Si te asignan una familia de otra religión, ¿necesitas poder asistir a tus propios servicios religiosos?</span></label>
+      <div class="yn">
+        <div class="yn-btn" onclick="setYN(this,'religReq','yes')">Required / Necesario</div>
+        <div class="yn-btn" onclick="setYN(this,'religReq','no')">Not necessary / No es necesario</div>
+      </div>
+      <input type="hidden" id="religReq">
+    </div>
+  </div>
+
+  <div class="nav-btns">
+    <span class="step-ct">Step 1 of 8</span>
+    <button class="btn btn-pri" onclick="goTo(1)">Next: Family →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 2 — FAMILY
+══════════════════════════════════════════ -->
+<div class="form-section" id="sec1">
+  <div class="sec-header">
+    <div class="sec-icon">2</div>
+    <div>
+      <h2>Tell Us About Your Family</h2>
+      <div class="h-es">Información sobre tu familia</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Family Overview</div>
+    <div class="card-title-es">Resumen familiar — cuántas personas viven en casa, con quién vives, etc.</div>
+    <div class="field">
+      <label><span class="en">Give a brief explanation of your family structure</span><span class="es">Describe brevemente tu estructura familiar (nº de personas en casa, con quién vives, etc.)</span></label>
+      <textarea id="familyDesc" rows="3" placeholder="How many people live at home? Who do you live with? Any special arrangements? / ¿Cuántas personas viven en casa? ¿Con quién vives?"></textarea>
+    </div>
+  </div>
+
+  <!-- Guardian 1 -->
+  <div class="card">
+    <div class="card-title">Parent / Guardian 1</div>
+    <div class="card-title-es">Padre, madre o tutor/a 1</div>
+    <div class="field" style="margin-bottom:12px">
+      <label><span class="en">Type</span><span class="es">Tipo de tutor/a</span></label>
+      <div class="opt-group">
+        <label class="opt-pill" onclick="selPill(this,'g1t')"><input type="radio" name="g1t"> Mother / Madre</label>
+        <label class="opt-pill" onclick="selPill(this,'g1t')"><input type="radio" name="g1t"> Father / Padre</label>
+        <label class="opt-pill" onclick="selPill(this,'g1t')"><input type="radio" name="g1t"> Other / Otro</label>
+      </div>
+    </div>
+    <div class="fg c2">
+      <div class="field"><label><span class="en">First Name</span><span class="es">Nombre</span></label><input type="text" id="g1first"></div>
+      <div class="field"><label><span class="en">Last Name</span><span class="es">Apellido(s)</span></label><input type="text" id="g1last"></div>
+    </div>
+    <div class="fg c2">
+      <div class="field"><label><span class="en">Occupation</span><span class="es">Profesión / Trabajo</span></label><input type="text" id="g1occ"></div>
+      <div class="field"><label><span class="en">Email Address</span><span class="es">Correo electrónico</span></label><input type="email" id="g1email"></div>
+    </div>
+    <div class="fg c2">
+      <div class="field"><label><span class="en">Mobile Phone Number</span><span class="es">Teléfono móvil</span></label><input type="tel" id="g1mobile"></div>
+      <div class="field"><label><span class="en">Alternative Contact Number</span><span class="es">Número alternativo</span></label><input type="tel" id="g1alt"></div>
+    </div>
+    <div class="fg c3">
+      <div class="field"><label><span class="en">Street Address</span><span class="es">Dirección (si es distinta)</span></label><input type="text" id="g1addr"></div>
+      <div class="field"><label><span class="en">City</span><span class="es">Ciudad</span></label><input type="text" id="g1city"></div>
+      <div class="field"><label><span class="en">Zip / Post Code</span><span class="es">Código postal</span></label><input type="text" id="g1post"></div>
+    </div>
+    <div class="fg c2">
+      <div class="field">
+        <label><span class="en">Knowledge of English</span><span class="es">Nivel de inglés del tutor/a</span></label>
+        <select id="g1eng"><option value="">Select / Selecciona</option><option>Fluent / Fluido</option><option>Good / Bueno</option><option>Average / Regular</option><option>Little / Poco</option><option>None / Ninguno</option></select>
+      </div>
+      <div class="field">
+        <label><span class="en">Best method for official communications</span><span class="es">¿Cómo prefiere recibir comunicaciones oficiales?</span></label>
+        <div class="opt-group">
+          <label class="opt-pill" onclick="selPill(this,'g1comm')"><input type="radio" name="g1comm"> Email</label>
+          <label class="opt-pill" onclick="selPill(this,'g1comm')"><input type="radio" name="g1comm"> Post / Correo postal</label>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label><span class="en">Does this guardian have custody or visitation rights?</span><span class="es">¿Este tutor/a tiene custodia o derecho de visita?</span></label>
+      <div class="yn">
+        <div class="yn-btn" onclick="setYN(this,'g1cust','yes')">Yes / Sí</div>
+        <div class="yn-btn" onclick="setYN(this,'g1cust','no')">No</div>
+      </div>
+      <input type="hidden" id="g1cust">
+    </div>
+  </div>
+
+  <!-- Guardian 2 -->
+  <div class="card">
+    <div class="card-title">Parent / Guardian 2</div>
+    <div class="card-title-es">Padre, madre o tutor/a 2</div>
+    <div class="field" style="margin-bottom:12px">
+      <label><span class="en">Type</span><span class="es">Tipo de tutor/a</span></label>
+      <div class="opt-group">
+        <label class="opt-pill" onclick="selPill(this,'g2t')"><input type="radio" name="g2t"> Mother / Madre</label>
+        <label class="opt-pill" onclick="selPill(this,'g2t')"><input type="radio" name="g2t"> Father / Padre</label>
+        <label class="opt-pill" onclick="selPill(this,'g2t')"><input type="radio" name="g2t"> Other / Otro</label>
+      </div>
+    </div>
+    <div class="fg c2">
+      <div class="field"><label><span class="en">First Name</span><span class="es">Nombre</span></label><input type="text" id="g2first"></div>
+      <div class="field"><label><span class="en">Last Name</span><span class="es">Apellido(s)</span></label><input type="text" id="g2last"></div>
+    </div>
+    <div class="fg c2">
+      <div class="field"><label><span class="en">Occupation</span><span class="es">Profesión</span></label><input type="text" id="g2occ"></div>
+      <div class="field"><label><span class="en">Email Address</span><span class="es">Correo electrónico</span></label><input type="email" id="g2email"></div>
+    </div>
+    <div class="fg c2">
+      <div class="field"><label><span class="en">Mobile Phone Number</span><span class="es">Teléfono móvil</span></label><input type="tel" id="g2mobile"></div>
+      <div class="field"><label><span class="en">Zip / Post Code</span><span class="es">Código postal</span></label><input type="text" id="g2post"></div>
+    </div>
+    <div class="fg c2">
+      <div class="field">
+        <label><span class="en">Knowledge of English</span><span class="es">Nivel de inglés</span></label>
+        <select id="g2eng"><option value="">Select / Selecciona</option><option>Fluent / Fluido</option><option>Good / Bueno</option><option>Average / Regular</option><option>Little / Poco</option><option>None / Ninguno</option></select>
+      </div>
+      <div class="field">
+        <label><span class="en">Where do we send a copy of all information?</span><span class="es">¿Dónde enviamos una copia de toda la información?</span></label>
+        <div class="opt-group">
+          <label class="opt-pill" onclick="selPill(this,'g2comm')"><input type="radio" name="g2comm"> Email</label>
+          <label class="opt-pill" onclick="selPill(this,'g2comm')"><input type="radio" name="g2comm"> Post / Correo postal</label>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label><span class="en">Does this guardian have custody or visitation rights?</span><span class="es">¿Este tutor/a tiene custodia o derecho de visita?</span></label>
+      <div class="yn">
+        <div class="yn-btn" onclick="setYN(this,'g2cust','yes')">Yes / Sí</div>
+        <div class="yn-btn" onclick="setYN(this,'g2cust','no')">No</div>
+      </div>
+      <input type="hidden" id="g2cust">
+    </div>
+  </div>
+
+  <!-- Siblings -->
+  <div class="card">
+    <div class="card-title">Sibling(s)</div>
+    <div class="card-title-es">Hermanos/as — añade tantos como necesites</div>
+    <div style="display:grid;grid-template-columns:1fr 110px 140px 90px 40px;gap:8px;margin-bottom:6px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">
+      <span>Full Name / Nombre completo</span><span>Relationship / Relación</span><span>Birth Date / F. nacimiento</span><span>Lives at home / Vive en casa</span><span></span>
+    </div>
+    <div id="siblingRows"></div>
+    <button class="btn btn-sec" style="margin-top:8px;font-size:10px;padding:6px 12px" onclick="addSibling()">+ Add Sibling / Añadir hermano/a</button>
+  </div>
+
+  <!-- Previous exchange -->
+  <div class="card">
+    <div class="card-title">Have You Had a Previous Exchange Experience?</div>
+    <div class="card-title-es">¿Has participado antes en un programa de intercambio?</div>
+    <div class="field">
+      <label><span class="en">Have you or any of your siblings participated in an exchange programme in the past?</span><span class="es">¿Tú o alguno de tus hermanos/as ha participado antes en un intercambio?</span></label>
+      <div class="yn">
+        <div class="yn-btn" onclick="setYN(this,'prevEx','yes');showCond('prevExD',true)">Yes / Sí</div>
+        <div class="yn-btn" onclick="setYN(this,'prevEx','no');showCond('prevExD',false)">No</div>
+      </div>
+      <input type="hidden" id="prevEx">
+    </div>
+    <div class="cond" id="prevExD">
+      <div class="fg c2" style="margin-top:8px">
+        <div class="field"><label><span class="en">Who was the experience with?</span><span class="es">¿Con qué organización?</span></label><input type="text" id="prevExOrg"></div>
+        <div class="field"><label><span class="en">What country did you/they visit?</span><span class="es">¿A qué país fue?</span></label><input type="text" id="prevExCountry"></div>
+      </div>
+      <div class="fg c2">
+        <div class="field"><label><span class="en">When was the exchange?</span><span class="es">¿Cuándo fue?</span></label><input type="text" id="prevExWhen" placeholder="e.g. Summer 2023 / Verano 2023"></div>
+      </div>
+      <div class="field"><label><span class="en">What was their opinion of the experience?</span><span class="es">¿Qué opinión tiene sobre la experiencia?</span></label><textarea id="prevExOpinion" rows="2"></textarea></div>
+    </div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-sec" onclick="goTo(0)">← Back</button>
+    <span class="step-ct">Step 2 of 8</span>
+    <button class="btn btn-pri" onclick="goTo(2)">Next: Education →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 3 — EDUCATION
+══════════════════════════════════════════ -->
+<div class="form-section" id="sec2">
+  <div class="sec-header">
+    <div class="sec-icon">3</div>
+    <div>
+      <h2>Some Educational Information</h2>
+      <div class="h-es">Información sobre tu colegio e idiomas</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">School Details</div>
+    <div class="card-title-es">Datos del colegio</div>
+    <div class="fg c1"><div class="field"><label><span class="en">School Name<span class="req">*</span></span><span class="es">Nombre del colegio</span></label><input type="text" id="schoolName"></div></div>
+    <div class="fg c1"><div class="field"><label><span class="en">School Address</span><span class="es">Dirección del colegio</span></label><input type="text" id="schoolAddr"></div></div>
+    <div class="fg c4">
+      <div class="field"><label><span class="en">City</span><span class="es">Ciudad</span></label><input type="text" id="schoolCity"></div>
+      <div class="field"><label><span class="en">State / Province</span><span class="es">Provincia</span></label><input type="text" id="schoolState"></div>
+      <div class="field"><label><span class="en">Zip / Post Code</span><span class="es">C.P.</span></label><input type="text" id="schoolPost"></div>
+      <div class="field"><label><span class="en">Country</span><span class="es">País</span></label><input type="text" id="schoolCountry" value="Spain"></div>
+    </div>
+    <div class="fg c2">
+      <div class="field"><label><span class="en">Phone Number</span><span class="es">Teléfono del colegio</span></label><input type="tel" id="schoolPhone"></div>
+      <div class="field"><label><span class="en">Email Address / Website</span><span class="es">Email o web del colegio</span></label><input type="text" id="schoolEmail"></div>
+    </div>
+    <div class="fg c2">
+      <div class="field"><label><span class="en">Current Grade / Level</span><span class="es">Curso actual (p.ej. 3º ESO, 1º Bachillerato)</span></label><input type="text" id="currentGrade"></div>
+      <div class="field"><label><span class="en">Expected Year of Graduation</span><span class="es">Año previsto de graduación</span></label><input type="text" id="gradYear" placeholder="e.g. 2026"></div>
+    </div>
+    <div class="field"><label><span class="en">What is your current academic standing in your class?</span><span class="es">¿Cuál es tu posición académica en clase? (p.ej. nota media, puesto en clase)</span></label><textarea id="academicStanding" rows="2"></textarea></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Language(s)</div>
+    <div class="card-title-es">Idiomas — indica tu lengua principal y valora los demás</div>
+    <div class="fg c2" style="margin-bottom:10px">
+      <div class="field"><label><span class="en">Primary Language<span class="req">*</span></span><span class="es">Lengua materna / principal</span></label><input type="text" id="primaryLang" value="Spanish / Español"></div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:8px">For each additional language, rate your speaking ability · <em>Para cada idioma adicional, valora tu nivel de expresión oral</em></p>
+    <table class="dt">
+      <thead><tr>
+        <th>Other Languages <div class="th-es">Otros idiomas</div></th>
+        <th>Years Studied <div class="th-es">Años estudiados</div></th>
+        <th>Speaking Ability <div class="th-es">Nivel de expresión oral</div></th>
+      </tr></thead>
+      <tbody id="langBody">
+        <tr>
+          <td><input type="text" value="English" style="width:100%"></td>
+          <td><input type="number" min="0" max="20" style="width:65px"></td>
+          <td><div class="scale-g">
+            <button class="sc-btn" onclick="setSc(this,'poor')">Poor / Bajo</button>
+            <button class="sc-btn" onclick="setSc(this,'fair')">Fair / Regular</button>
+            <button class="sc-btn" onclick="setSc(this,'good')">Good / Bueno</button>
+            <button class="sc-btn" onclick="setSc(this,'excellent')">Excellent / Excelente</button>
+          </div></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-sec" style="margin-top:8px;font-size:10px;padding:6px 12px" onclick="addLanguage()">+ Add Language / Añadir idioma</button>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-sec" onclick="goTo(1)">← Back</button>
+    <span class="step-ct">Step 3 of 8</span>
+    <button class="btn btn-pri" onclick="goTo(3)">Next: Health →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 4 — HEALTH
+══════════════════════════════════════════ -->
+<div class="form-section" id="sec3">
+  <div class="sec-header">
+    <div class="sec-icon">4</div>
+    <div>
+      <h2>Health Check Certificate</h2>
+      <div class="h-es">Certificado médico — debe revisarse con el médico del estudiante</div>
+    </div>
+  </div>
+
+  <div class="notice warn">
+    <strong>Important / Importante</strong> — This section must be reviewed with and confirmed by the student's physician. Each "Yes" answer requires an explanation.
+    <div class="n-es">Esta sección debe ser revisada y confirmada por el médico del/de la estudiante. Cada respuesta "Sí" requiere una explicación adicional.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Vital Statistics</div>
+    <div class="card-title-es">Datos vitales</div>
+    <div class="fg c4">
+      <div class="field"><label><span class="en">Blood Pressure</span><span class="es">Tensión arterial</span></label><input type="text" id="bp" placeholder="e.g. 120/80"></div>
+      <div class="field"><label><span class="en">Pulse (bpm)</span><span class="es">Pulso (ppm)</span></label><input type="number" id="pulse"></div>
+      <div class="field"><label><span class="en">Respiration</span><span class="es">Respiración</span></label><input type="text" id="resp"></div>
+      <div class="field"><label><span class="en">Blood Type</span><span class="es">Grupo sanguíneo</span></label><select id="bloodType"><option value="">Select</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option><option>Unknown</option></select></div>
+    </div>
+    <div class="field">
+      <label><span class="en">Do you note any abnormalities in height, weight, blood pressure, pulse or respiration? (including significant weight change in past 6 months)</span><span class="es">¿Hay alguna anomalía en altura, peso, tensión, pulso o respiración? (incluyendo cambios significativos de peso en los últimos 6 meses)</span></label>
+      <div class="yn">
+        <div class="yn-btn" onclick="setYN(this,'vitAbn','yes');showCond('vitAbnD',true)">Yes / Sí</div>
+        <div class="yn-btn" onclick="setYN(this,'vitAbn','no');showCond('vitAbnD',false)">No</div>
+      </div>
+      <input type="hidden" id="vitAbn">
+      <div class="cond" id="vitAbnD"><div class="field" style="margin-top:8px"><label><span class="en">Please describe</span><span class="es">Por favor, describe</span></label><textarea id="vitAbnDesc" rows="2"></textarea></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Medical History</div>
+    <div class="card-title-es">Historial médico — indica si el/la candidato/a ha tenido alguna de las siguientes condiciones</div>
+    <div id="medConditions"></div>
+    <div class="field" style="margin-top:12px"><label><span class="en">If yes to any above, please provide detailed information and dates</span><span class="es">Si respondiste "Sí" a alguna, proporciona información detallada y fechas</span></label><textarea id="medDetails" rows="3"></textarea></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Ongoing Conditions</div>
+    <div class="card-title-es">Condiciones actuales — indica dosis, frecuencia y detalles si aplica</div>
+    <div id="ongoingConditions"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Organ Systems</div>
+    <div class="card-title-es">Sistemas del organismo — ¿ha tenido el/la candidato/a alguna enfermedad o anomalía en los siguientes sistemas?</div>
+    <div id="organSystems"></div>
+    <div class="field" style="margin-top:10px"><label><span class="en">If yes to any above, please explain</span><span class="es">Si respondiste "Sí" a alguno, explica con detalle</span></label><textarea id="organDetails" rows="2"></textarea></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Hospitalisation & Medication</div>
+    <div class="card-title-es">Hospitalizaciones y medicación actual</div>
+    <div class="field">
+      <label><span class="en">Has the candidate ever been hospitalised?</span><span class="es">¿Ha sido hospitalizado/a alguna vez el/la candidato/a?</span></label>
+      <div class="yn">
+        <div class="yn-btn" onclick="setYN(this,'hosp','yes');showCond('hospD',true)">Yes / Sí</div>
+        <div class="yn-btn" onclick="setYN(this,'hosp','no');showCond('hospD',false)">No</div>
+      </div>
+      <input type="hidden" id="hosp">
+      <div class="cond" id="hospD"><div class="field" style="margin-top:8px"><label><span class="en">Dates, diagnosis and outcome for each incident</span><span class="es">Fechas, diagnóstico y resultado de cada hospitalización</span></label><textarea id="hospDesc" rows="2"></textarea></div></div>
+    </div>
+    <div class="field" style="margin-top:14px">
+      <label><span class="en">Is the candidate currently taking any medication or injections?</span><span class="es">¿Está tomando actualmente algún medicamento o inyección?</span></label>
+      <div class="yn">
+        <div class="yn-btn" onclick="setYN(this,'meds','yes');showCond('medsD',true)">Yes / Sí</div>
+        <div class="yn-btn" onclick="setYN(this,'meds','no');showCond('medsD',false)">No</div>
+      </div>
+      <input type="hidden" id="meds">
+      <div class="cond" id="medsD"><div class="field" style="margin-top:8px"><label><span class="en">Medication name, reason for use, dosage and frequency</span><span class="es">Nombre del medicamento, motivo, dosis y frecuencia</span></label><textarea id="medsDesc" rows="2"></textarea></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Emotional Wellbeing</div>
+    <div class="card-title-es">Bienestar emocional — por favor, responde con honestidad para poder apoyar mejor al/a la estudiante</div>
+    <div class="notice warn" style="margin-bottom:12px">
+      Placement in a foreign host family involves adjustment and emotional stress. Please answer honestly so we can best support the student.
+      <div class="n-es">Vivir con una familia extranjera implica adaptación y cierto estrés emocional. Responde con sinceridad para poder brindar el apoyo necesario.</div>
+    </div>
+    <div class="field">
+      <label><span class="en">Has the candidate ever consulted a neurologist, psychologist or specialist for a nervous, emotional or eating disorder?</span><span class="es">¿Ha consultado alguna vez a un neurólogo, psicólogo u otro especialista por trastornos nerviosos, emocionales o alimentarios?</span></label>
+      <div class="yn"><div class="yn-btn" onclick="setYN(this,'psych','yes')">Yes / Sí</div><div class="yn-btn" onclick="setYN(this,'psych','no')">No</div></div>
+      <input type="hidden" id="psych">
+    </div>
+    <div class="field" style="margin-top:12px">
+      <label><span class="en">Is there a history of, or present evidence of, an emotional, nervous or eating disorder?</span><span class="es">¿Existe historial o evidencia actual de trastorno emocional, nervioso o alimentario?</span></label>
+      <div class="yn"><div class="yn-btn" onclick="setYN(this,'emotHist','yes')">Yes / Sí</div><div class="yn-btn" onclick="setYN(this,'emotHist','no')">No</div></div>
+      <input type="hidden" id="emotHist">
+    </div>
+    <p style="font-size:11.5px;color:var(--muted);margin-top:8px;font-style:italic">If yes to either above, a full report by the specialist must be submitted in a sealed envelope. · Si respondiste "Sí", debes adjuntar un informe completo del especialista en sobre cerrado.</p>
+    <div class="field" style="margin-top:12px">
+      <label><span class="en">Are there any health limitations or restrictions on the candidate's activities and/or sports participation?</span><span class="es">¿Hay alguna restricción de salud para actividades físicas o deportivas?</span></label>
+      <div class="yn"><div class="yn-btn" onclick="setYN(this,'healthLim','yes');showCond('healthLimD',true)">Yes / Sí</div><div class="yn-btn" onclick="setYN(this,'healthLim','no');showCond('healthLimD',false)">No</div></div>
+      <input type="hidden" id="healthLim">
+      <div class="cond" id="healthLimD"><div class="field" style="margin-top:8px"><label><span class="en">Please describe</span><span class="es">Por favor, describe</span></label><textarea id="healthLimDesc" rows="2"></textarea></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Glasses, Dental & Other</div>
+    <div class="card-title-es">Gafas, dentista y otros</div>
+    <div class="fg c2">
+      <div class="field">
+        <label><span class="en">Does the candidate wear glasses or contact lenses?</span><span class="es">¿Usa gafas o lentillas?</span></label>
+        <div class="yn"><div class="yn-btn" onclick="setYN(this,'glasses','yes')">Yes / Sí</div><div class="yn-btn" onclick="setYN(this,'glasses','no')">No</div></div>
+        <input type="hidden" id="glasses">
+      </div>
+      <div class="field"><label><span class="en">Date of last dental check-up</span><span class="es">Fecha de la última revisión dental</span></label><input type="date" id="dentalDate"></div>
+    </div>
+    <div class="field" style="margin-top:10px">
+      <label><span class="en">Does the candidate wear dental braces?</span><span class="es">¿Lleva ortodoncia?</span></label>
+      <div class="yn"><div class="yn-btn" onclick="setYN(this,'braces','yes');showCond('bracesD',true)">Yes / Sí</div><div class="yn-btn" onclick="setYN(this,'braces','no');showCond('bracesD',false)">No</div></div>
+      <input type="hidden" id="braces">
+      <div class="cond" id="bracesD">
+        <div class="fg c2" style="margin-top:8px">
+          <div class="field"><label><span class="en">Will orthodontic care be needed while on the programme?</span><span class="es">¿Necesitará revisiones ortodóncicas durante el programa?</span></label><div class="yn"><div class="yn-btn" onclick="setYN(this,'ortho','yes')">Yes / Sí</div><div class="yn-btn" onclick="setYN(this,'ortho','no')">No</div></div><input type="hidden" id="ortho"></div>
+          <div class="field"><label><span class="en">Frequency</span><span class="es">Frecuencia de las revisiones</span></label><input type="text" id="orthoFreq"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Immunisations</div>
+    <div class="card-title-es">Vacunas — indica la fecha exacta (día/mes/año) de cada vacuna recibida</div>
+    <table class="dt">
+      <thead><tr>
+        <th>Vaccine <div class="th-es">Vacuna</div></th>
+        <th>Date <div class="th-es">Fecha</div></th>
+        <th>Vaccine <div class="th-es">Vacuna</div></th>
+        <th>Date <div class="th-es">Fecha</div></th>
+      </tr></thead>
+      <tbody id="immunBody"></tbody>
+    </table>
+    <div class="fg c3" style="margin-top:12px">
+      <div class="field"><label><span class="en">TB Test – Which type?</span><span class="es">Prueba de tuberculosis — ¿qué tipo?</span></label><input type="text" id="tbType"></div>
+      <div class="field"><label><span class="en">TB Test Result</span><span class="es">Resultado de la prueba</span></label><div class="yn"><div class="yn-btn" onclick="setYN(this,'tbResult','pos')">Positive (+)</div><div class="yn-btn" onclick="setYN(this,'tbResult','neg')">Negative (-)</div></div><input type="hidden" id="tbResult"></div>
+      <div class="field"><label><span class="en">Chest X-ray date (if positive)</span><span class="es">Fecha de radiografía (si fue positivo)</span></label><input type="date" id="xrayDate"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Physician Certification</div>
+    <div class="card-title-es">Certificación del médico — el/la médico/a debe firmar aquí</div>
+    <div class="fg c2">
+      <div class="field"><label><span class="en">Physician Name and Degree</span><span class="es">Nombre y titulación del médico/a</span></label><input type="text" id="physicianName"></div>
+      <div class="field"><label><span class="en">Date of Examination</span><span class="es">Fecha de la consulta</span></label><input type="date" id="physicianDate"></div>
+    </div>
+    <div class="field" style="margin-top:12px">
+      <label><span class="en">Physician's Signature</span><span class="es">Firma del médico/a</span></label>
+      <canvas class="sig-canvas" id="physicianSig"></canvas>
+      <button class="btn btn-sec" style="margin-top:5px;font-size:10px;padding:5px 10px" onclick="clearSig('physicianSig')">Clear / Borrar</button>
+    </div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-sec" onclick="goTo(2)">← Back</button>
+    <span class="step-ct">Step 4 of 8</span>
+    <button class="btn btn-pri" onclick="goTo(4)">Next: Lifestyle →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 5 — LIFESTYLE
+══════════════════════════════════════════ -->
+<div class="form-section" id="sec4">
+  <div class="sec-header">
+    <div class="sec-icon">5</div>
+    <div>
+      <h2>Your Health and Lifestyle</h2>
+      <div class="h-es">Tu salud y estilo de vida — para encontrarte la mejor familia anfitriona</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Physical Restrictions & Allergies</div>
+    <div class="card-title-es">Restricciones físicas y alergias</div>
+    <div class="field">
+      <label><span class="en">Do you have any physical restrictions, impairments or allergies that will limit placement options or participation in everyday family and/or school activities?</span><span class="es">¿Tienes alguna restricción física, discapacidad o alergia que pueda limitar tu participación en actividades familiares o escolares del día a día?</span></label>
+      <div class="yn"><div class="yn-btn" onclick="setYN(this,'physRestr','yes');showCond('physRestrD',true)">Yes / Sí</div><div class="yn-btn" onclick="setYN(this,'physRestr','no');showCond('physRestrD',false)">No</div></div>
+      <input type="hidden" id="physRestr">
+      <div class="cond" id="physRestrD"><div class="field" style="margin-top:8px"><label><span class="en">Please describe</span><span class="es">Por favor, describe</span></label><textarea id="physRestrDesc" rows="2"></textarea></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Pets & Animals</div>
+    <div class="card-title-es">Animales — indica si hay algún animal con el que NO puedas vivir</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Please check if you <strong>cannot</strong> live with: · <em>Indica si NO puedes convivir con:</em></p>
+    <div style="display:flex;flex-wrap:wrap;gap:20px;margin-bottom:12px">
+      <div>
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">CATS / Gatos</div>
+        <div class="opt-group">
+          <label class="opt-pill" onclick="toggleChk(this)"><input type="checkbox"> Indoors / En casa</label>
+          <label class="opt-pill" onclick="toggleChk(this)"><input type="checkbox"> Outdoors / Fuera</label>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">DOGS / Perros</div>
+        <div class="opt-group">
+          <label class="opt-pill" onclick="toggleChk(this)"><input type="checkbox"> Indoors / En casa</label>
+          <label class="opt-pill" onclick="toggleChk(this)"><input type="checkbox"> Outdoors / Fuera</label>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">OTHER / Otros</div>
+        <div class="opt-group">
+          <label class="opt-pill" onclick="toggleChk(this)"><input type="checkbox"> Indoors / En casa</label>
+          <label class="opt-pill" onclick="toggleChk(this)"><input type="checkbox"> Outdoors / Fuera</label>
+        </div>
+      </div>
+    </div>
+    <div class="field"><label><span class="en">Which animal and why? (for Other)</span><span class="es">¿Qué animal y por qué? (para "Otros")</span></label><input type="text" id="petReason"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Diet & Habits</div>
+    <div class="card-title-es">Alimentación y hábitos</div>
+    <div class="field">
+      <label><span class="en">Do you have any dietary restrictions (for medical or religious reasons)?</span><span class="es">¿Tienes alguna restricción alimentaria por motivos médicos o religiosos?</span></label>
+      <div class="yn"><div class="yn-btn" onclick="setYN(this,'diet','yes');showCond('dietD',true)">Yes / Sí</div><div class="yn-btn" onclick="setYN(this,'diet','no');showCond('dietD',false)">No</div></div>
+      <input type="hidden" id="diet">
+      <div class="cond" id="dietD"><div class="field" style="margin-top:8px"><label><span class="en">Please describe</span><span class="es">Describe tu restricción alimentaria</span></label><textarea id="dietDesc" rows="2"></textarea></div></div>
+    </div>
+    <div class="field" style="margin-top:14px">
+      <label><span class="en">Do you smoke cigarettes / e-cigarettes?</span><span class="es">¿Fumas cigarrillos o cigarrillos electrónicos?</span></label>
+      <div class="yn"><div class="yn-btn" onclick="setYN(this,'smoke','yes')">Yes / Sí</div><div class="yn-btn" onclick="setYN(this,'smoke','no')">No</div></div>
+      <input type="hidden" id="smoke">
+      <p style="font-size:11.5px;color:var(--muted);margin-top:6px;font-style:italic">Under the Irish Public Health Act 2002, it is illegal for anyone under 18 to purchase tobacco products. Most host families will not accept a participant who smokes. · Según la ley irlandesa de salud pública de 2002, está prohibido que menores de 18 años compren tabaco. La mayoría de familias anfitrionas no aceptarán a participantes fumadores.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Please Describe a Typical Weekday</div>
+    <div class="card-title-es">Describe un día de colegio típico para ti — a qué hora te levantas, qué haces después del colegio, etc.</div>
+    <div class="field"><textarea id="weekday" rows="4" placeholder="e.g. I wake up at 7am, go to school at 8:30, finish at 3pm, then I usually... / Me levanto a las 7, voy al colegio a las 8:30..."></textarea></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Please Describe a Typical Weekend</div>
+    <div class="card-title-es">Describe un fin de semana típico para ti</div>
+    <div class="field"><textarea id="weekend" rows="4"></textarea></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Your Letter to the Host Family</div>
+    <div class="card-title-es">Carta para la familia anfitriona — preséntate, habla de tu familia y tu vida, tus gustos, hobbies, y por qué quieres hacer este intercambio. Intenta que no supere una página.</div>
+    <div class="notice ok" style="margin-bottom:10px">
+      Be honest! The host family wants to get to know the real you. Try to keep it to one page.
+      <div class="n-es">¡Sé honesto/a! La familia anfitriona quiere conocer al/a la verdadero/a tú. Intenta que no supere una página.</div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:8px">Include: introduction to yourself &amp; your family · what you like &amp; dislike · hobbies &amp; interests · goals for the programme · reasons for doing an exchange <br><em>Incluye: presentación de ti y tu familia · qué te gusta y qué no · hobbies · qué esperas conseguir · por qué quieres hacer un intercambio</em></p>
+    <div class="field"><textarea id="hostLetter" rows="14" placeholder="Dear Host Family, / Querida familia anfitriona,&#10;&#10;My name is... / Me llamo..."></textarea></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Your Hobbies and Interests</div>
+    <div class="card-title-es">Tus hobbies e intereses — marca cada uno como H (Alto), L (Bajo) o – (Sin interés)</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Mark each hobby as <strong>H</strong> (High interest), <strong>L</strong> (Low interest) or <strong>–</strong> (No interest) · <em>Marca cada hobby como <strong>H</strong> (mucho interés), <strong>L</strong> (poco) o <strong>–</strong> (sin interés)</em></p>
+    <div class="hobby-grid" id="hobbyGrid"></div>
+    <div class="fg c2" style="margin-top:12px">
+      <div class="field"><label><span class="en">Other Interests</span><span class="es">Otros intereses</span></label><textarea id="otherInt1" rows="2"></textarea></div>
+      <div class="field"><label><span class="en">Other Interests (continued)</span><span class="es">Otros intereses (continuación)</span></label><textarea id="otherInt2" rows="2"></textarea></div>
+    </div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-sec" onclick="goTo(3)">← Back</button>
+    <span class="step-ct">Step 5 of 8</span>
+    <button class="btn btn-pri" onclick="goTo(5)">Next: Academic Record →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 6 — ACADEMIC RECORD
+══════════════════════════════════════════ -->
+<div class="form-section" id="sec5">
+  <div class="sec-header">
+    <div class="sec-icon">6</div>
+    <div>
+      <h2>Academic Record & Transcript of Grades</h2>
+      <div class="h-es">Expediente académico — debe completarlo y firmarlo un funcionario del colegio</div>
+    </div>
+  </div>
+
+  <div class="notice warn">
+    <strong>School Official Only</strong> — This form must be completed and signed by a school official with the school stamp. Attaching an official transcript is strongly recommended.
+    <div class="n-es">Este formulario debe ser completado y firmado por un funcionario del colegio con el sello oficial. Se recomienda adjuntar también el expediente académico oficial.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">School & Student Information</div>
+    <div class="card-title-es">Datos del colegio y del/de la estudiante</div>
+    <div class="fg c2">
+      <div class="field"><label><span class="en">Candidate Name</span><span class="es">Nombre del/de la candidato/a</span></label><input type="text" id="acName"></div>
+      <div class="field"><label><span class="en">Expected Graduation (Month & Year)</span><span class="es">Fecha prevista de graduación (mes y año)</span></label><input type="text" id="acGrad" placeholder="e.g. June 2026 / Junio 2026"></div>
+    </div>
+    <div class="fg c1"><div class="field"><label><span class="en">School Name</span><span class="es">Nombre del colegio</span></label><input type="text" id="acSchool"></div></div>
+    <div class="fg c1"><div class="field"><label><span class="en">School Address</span><span class="es">Dirección del colegio</span></label><input type="text" id="acAddr"></div></div>
+    <div class="fg c2">
+      <div class="field"><label><span class="en">Contact Number 1</span><span class="es">Teléfono de contacto 1</span></label><input type="tel" id="acPhone1"></div>
+      <div class="field"><label><span class="en">Contact Number 2</span><span class="es">Teléfono de contacto 2</span></label><input type="tel" id="acPhone2"></div>
+    </div>
+    <div class="fg c2">
+      <div class="field"><label><span class="en">Principal / Director Name</span><span class="es">Nombre del director/a</span></label><input type="text" id="acPrincipal"></div>
+      <div class="field"><label><span class="en">Exchange Coordinator Name (if applicable)</span><span class="es">Nombre del coordinador/a de intercambios (si aplica)</span></label><input type="text" id="acCoord"></div>
+    </div>
+    <div class="field">
+      <label><span class="en">School Profile / Type</span><span class="es">Tipo de centro educativo</span></label>
+      <div class="opt-group">
+        <label class="opt-pill" onclick="selPill(this,'schType')"><input type="radio" name="schType"> Public / Público</label>
+        <label class="opt-pill" onclick="selPill(this,'schType')"><input type="radio" name="schType"> Private / Privado</label>
+        <label class="opt-pill" onclick="selPill(this,'schType')"><input type="radio" name="schType"> University Prep / Preuniversitario</label>
+        <label class="opt-pill" onclick="selPill(this,'schType')"><input type="radio" name="schType"> Vocational / FP</label>
+        <label class="opt-pill" onclick="selPill(this,'schType')"><input type="radio" name="schType"> Other / Otro</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Academic Standing</div>
+    <div class="card-title-es">Situación académica del/de la estudiante</div>
+    <div class="fg c2">
+      <div class="field"><label><span class="en">Student's Current Year in School</span><span class="es">Curso actual del/de la estudiante</span></label><input type="text" id="acYear"></div>
+      <div class="field"><label><span class="en">Current GPA / Average Grades</span><span class="es">Nota media actual</span></label><input type="text" id="acGpa"></div>
+    </div>
+    <div class="fg c2">
+      <div class="field"><label><span class="en">Student Ranking in Class / Group (if available)</span><span class="es">Posición del/de la estudiante en clase (si está disponible)</span></label><input type="text" id="acRank"></div>
+      <div class="field">
+        <label><span class="en">If no numerical ranking, indicate student's position relative to others</span><span class="es">Si no hay posición numérica, indica el cuartil del/de la estudiante</span></label>
+        <div class="opt-group">
+          <label class="opt-pill" onclick="selPill(this,'quartile')"><input type="radio" name="quartile"> Top 25%</label>
+          <label class="opt-pill" onclick="selPill(this,'quartile')"><input type="radio" name="quartile"> 2nd Quartile</label>
+          <label class="opt-pill" onclick="selPill(this,'quartile')"><input type="radio" name="quartile"> 3rd Quartile</label>
+          <label class="opt-pill" onclick="selPill(this,'quartile')"><input type="radio" name="quartile"> 4th Quartile</label>
+        </div>
+      </div>
+    </div>
+    <div class="fg c2">
+      <div class="field"><label><span class="en">Years of Primary Education completed</span><span class="es">Años de educación primaria completados</span></label><input type="number" id="acPrimYrs"></div>
+      <div class="field"><label><span class="en">Years of Secondary Education completed</span><span class="es">Años de educación secundaria completados</span></label><input type="number" id="acSecYrs"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Grading Scale Reference</div>
+    <div class="card-title-es">Referencia del sistema de calificaciones</div>
+    <div class="grade-ref">
+      <div class="gr-box" style="background:var(--green-light)"><span class="en">1 = A+ (Excellent)</span><span class="es">Sobresaliente</span></div>
+      <div class="gr-box" style="background:var(--green-light)"><span class="en">2 = A (Very Good)</span><span class="es">Muy bueno</span></div>
+      <div class="gr-box" style="background:var(--navy-light)"><span class="en">3 = B (Good)</span><span class="es">Bueno</span></div>
+      <div class="gr-box" style="background:var(--navy-light)"><span class="en">4 = C (Average)</span><span class="es">Normal / Aceptable</span></div>
+      <div class="gr-box" style="background:var(--red-light)"><span class="en">5 = D (Poor)</span><span class="es">Deficiente</span></div>
+      <div class="gr-box" style="background:var(--red-light)"><span class="en">F = Fail</span><span class="es">Suspenso</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Language Competency (as assessed by school)</div>
+    <div class="card-title-es">Competencia lingüística según la valoración del colegio</div>
+    <table class="dt">
+      <thead><tr>
+        <th>Skill <div class="th-es">Competencia</div></th>
+        <th>English <div class="th-es">Inglés</div></th>
+        <th>Other Language <div class="th-es">Otro idioma</div></th>
+      </tr></thead>
+      <tbody id="langCompBody"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Courses & Grades – Current Academic Year</div>
+    <div class="card-title-es">Asignaturas y calificaciones — año académico actual</div>
+    <table class="dt"><thead><tr>
+      <th>#</th><th>Course / Asignatura</th><th>Final Grade / Calificación final</th>
+      <th>#</th><th>Course / Asignatura</th><th>Final Grade / Calificación final</th>
+    </tr></thead><tbody id="gradesCurrentBody"></tbody></table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Courses & Grades – Previous Academic Year (1)</div>
+    <div class="card-title-es">Asignaturas y calificaciones — año académico anterior (1)</div>
+    <table class="dt"><thead><tr>
+      <th>#</th><th>Course / Asignatura</th><th>Final Grade / Calificación final</th>
+      <th>#</th><th>Course / Asignatura</th><th>Final Grade / Calificación final</th>
+    </tr></thead><tbody id="gradesPrev1Body"></tbody></table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Courses & Grades – Previous Academic Year (2)</div>
+    <div class="card-title-es">Asignaturas y calificaciones — año académico anterior (2)</div>
+    <table class="dt"><thead><tr>
+      <th>#</th><th>Course / Asignatura</th><th>Final Grade / Calificación final</th>
+      <th>#</th><th>Course / Asignatura</th><th>Final Grade / Calificación final</th>
+    </tr></thead><tbody id="gradesPrev2Body"></tbody></table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Attendance & Academic Progress</div>
+    <div class="card-title-es">Asistencia y progreso académico</div>
+    <div class="field">
+      <label><span class="en">Has the student ever failed, repeated or skipped a semester, trimester or year?</span><span class="es">¿El/la estudiante ha suspendido, repetido o saltado algún semestre, trimestre o curso?</span></label>
+      <div class="yn"><div class="yn-btn" onclick="setYN(this,'failed','yes');showCond('failedD',true)">Yes / Sí</div><div class="yn-btn" onclick="setYN(this,'failed','no');showCond('failedD',false)">No</div></div>
+      <input type="hidden" id="failed">
+      <div class="cond" id="failedD"><div class="field" style="margin-top:8px"><label><span class="en">Please provide more information</span><span class="es">Proporciona más información</span></label><textarea id="failedDesc" rows="2"></textarea></div></div>
+    </div>
+    <div class="field" style="margin-top:14px">
+      <label><span class="en">Is there a history of frequent absences (2 or more per calendar month)?</span><span class="es">¿Hay historial de faltas frecuentes de asistencia (2 o más al mes)?</span></label>
+      <div class="yn"><div class="yn-btn" onclick="setYN(this,'absences','yes');showCond('absencesD',true)">Yes / Sí</div><div class="yn-btn" onclick="setYN(this,'absences','no');showCond('absencesD',false)">No</div></div>
+      <input type="hidden" id="absences">
+      <div class="cond" id="absencesD"><div class="field" style="margin-top:8px"><label><span class="en">Please attach an explanation</span><span class="es">Adjunta una explicación</span></label><textarea id="absencesDesc" rows="2"></textarea></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">School's Evaluation of the Student</div>
+    <div class="card-title-es">Valoración del colegio sobre el/la estudiante</div>
+    <div class="field"><label><span class="en">Comment on the student's personality and motivation at school</span><span class="es">Comenta la personalidad y motivación del/de la estudiante en el colegio</span></label><textarea id="schoolComment" rows="5"></textarea></div>
+    <div class="field" style="margin-top:12px"><label><span class="en">How long have you known this student?</span><span class="es">¿Cuánto tiempo llevas conociendo a este/a estudiante?</span></label><input type="text" id="knownHow" placeholder="e.g. 3 years / 3 años"></div>
+    <div class="field" style="margin-top:12px">
+      <label><span class="en">Are you willing to recommend that this student has the appropriate ability to study abroad in a system that teaches all subjects in English?</span><span class="es">¿Recomiendas que este/a estudiante tiene la capacidad adecuada para estudiar en el extranjero en un sistema educativo en inglés?</span></label>
+      <div class="yn"><div class="yn-btn" onclick="setYN(this,'schoolRec','yes')">Yes / Sí</div><div class="yn-btn" onclick="setYN(this,'schoolRec','no')">No</div></div>
+      <input type="hidden" id="schoolRec">
+    </div>
+    <div class="fg c2" style="margin-top:14px">
+      <div class="field"><label><span class="en">Name and Title of School Official</span><span class="es">Nombre y cargo del funcionario/a del colegio</span></label><input type="text" id="officialName"></div>
+      <div class="field"><label><span class="en">Email</span><span class="es">Correo electrónico</span></label><input type="email" id="officialEmail"></div>
+    </div>
+    <div class="fg c2">
+      <div class="field"><label><span class="en">Date</span><span class="es">Fecha</span></label><input type="date" id="officialDate"></div>
+      <div class="field"><label><span class="en">School Stamp</span><span class="es">Sello del colegio (confirmar si está adjunto)</span></label><input type="text" id="officialStamp" placeholder="Attached / Adjunto"></div>
+    </div>
+    <div class="field" style="margin-top:12px">
+      <label><span class="en">Official's Signature</span><span class="es">Firma del funcionario/a</span></label>
+      <canvas class="sig-canvas" id="officialSig"></canvas>
+      <button class="btn btn-sec" style="margin-top:5px;font-size:10px;padding:5px 10px" onclick="clearSig('officialSig')">Clear / Borrar</button>
+    </div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-sec" onclick="goTo(4)">← Back</button>
+    <span class="step-ct">Step 6 of 8</span>
+    <button class="btn btn-pri" onclick="goTo(6)">Next: Parents' Statement →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 7 — PARENTS' STATEMENT
+══════════════════════════════════════════ -->
+<div class="form-section" id="sec6">
+  <div class="sec-header">
+    <div class="sec-icon">7</div>
+    <div>
+      <h2>Parents' Statement</h2>
+      <div class="h-es">Declaración de los padres / tutores legales</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Student Overview</div>
+    <div class="card-title-es">Datos generales del/de la estudiante</div>
+    <div class="fg c3">
+      <div class="field"><label><span class="en">Candidate's Name</span><span class="es">Nombre del/de la candidato/a</span></label><input type="text" id="psName"></div>
+      <div class="field"><label><span class="en">Country</span><span class="es">País</span></label><input type="text" id="psCountry" value="Spain"></div>
+      <div class="field"><label><span class="en">Candidate's Age at Start of Programme</span><span class="es">Edad al inicio del programa</span></label><input type="text" id="psAge" placeholder="e.g. 16"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">1. Family Situation</div>
+    <div class="card-title-es">Situación familiar — si el/la estudiante no vive con ambos padres naturales, describe cuándo se separaron, si tiene contacto con ambos, y si alguno ha fallecido</div>
+    <div class="field"><textarea id="famSituation" rows="4" placeholder="Leave blank if the student lives with both natural parents and there are no special circumstances. / Deja en blanco si el/la estudiante vive con ambos padres y no hay circunstancias especiales."></textarea></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">2. Family Activities</div>
+    <div class="card-title-es">Actividades familiares — indica con qué frecuencia realiza tu familia las siguientes actividades juntos</div>
+    <div id="famActivGrid"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">3. Behaviour Away from Home</div>
+    <div class="card-title-es">Comportamiento lejos de casa — ¿cómo se comporta tu hijo/a cuando está lejos del hogar?</div>
+    <div class="field"><textarea id="awayBehav" rows="4"></textarea></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">4. Personal Development — Select up to 7 adjectives</div>
+    <div class="card-title-es">Desarrollo personal — elige hasta 7 adjetivos que mejor describan a tu hijo/a</div>
+    <div class="adj-grid" id="adjPersonal"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">5. Personality, Character & Interests</div>
+    <div class="card-title-es">Describe la personalidad, el carácter y los intereses de tu hijo/a</div>
+    <div class="field"><textarea id="personalityDesc" rows="5"></textarea></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">6. Relationship with Others — Select up to 7 adjectives</div>
+    <div class="card-title-es">Relación con los demás — elige hasta 7 adjetivos que describan cómo se relaciona tu hijo/a con otras personas</div>
+    <div class="adj-grid" id="adjRelations"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">7. Describe Your Child's Relationships</div>
+    <div class="card-title-es">Describe la relación de tu hijo/a contigo, con el resto de la familia y con otras personas en su vida</div>
+    <div class="field"><textarea id="relationsDesc" rows="4"></textarea></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">8. In a Conflict Situation — Select up to 7 adjectives</div>
+    <div class="card-title-es">En situaciones de conflicto — elige hasta 7 adjetivos que describan cómo reacciona tu hijo/a ante los conflictos</div>
+    <div class="adj-grid" id="adjConflict"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">9. Handling Difficult Situations</div>
+    <div class="card-title-es">¿Cómo maneja tu hijo/a las situaciones difíciles o desafiantes?</div>
+    <div class="field"><textarea id="challengeDesc" rows="4"></textarea></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">10. Disorders / Disabilities</div>
+    <div class="card-title-es">Trastornos o discapacidades — esta información es estrictamente confidencial y nos ayuda a asignar la familia más adecuada</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:10px">In the case of any disorders, please disclose details below — this is important so we can match to a compassionate family. · <em>Si hay algún trastorno, indícalo a continuación para poder asignarte la familia más apropiada.</em></p>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+      <label class="opt-pill" onclick="toggleChk(this)"><input type="checkbox"> Physical / Físico</label>
+      <label class="opt-pill" onclick="toggleChk(this)"><input type="checkbox"> Emotional / Behavioural · Emocional / Conductual</label>
+      <label class="opt-pill" onclick="toggleChk(this)"><input type="checkbox"> Eating Disorder · Trastorno alimentario</label>
+    </div>
+    <div class="field"><label><span class="en">Additional comments regarding placement, wellbeing or welfare</span><span class="es">Comentarios adicionales sobre el bienestar del/de la estudiante o consideraciones importantes para su asignación</span></label><textarea id="disorderComments" rows="4"></textarea></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Guardian Signature</div>
+    <div class="card-title-es">Firma del tutor/a legal</div>
+    <div class="fg c2">
+      <div class="field"><label><span class="en">Name of Legal Guardian(s)</span><span class="es">Nombre del tutor/a legal</span></label><input type="text" id="guardianName"></div>
+      <div class="field"><label><span class="en">Date</span><span class="es">Fecha</span></label><input type="date" id="guardianDate"></div>
+    </div>
+    <div class="field" style="margin-top:12px">
+      <label><span class="en">Signature</span><span class="es">Firma</span></label>
+      <canvas class="sig-canvas" id="guardianSig"></canvas>
+      <button class="btn btn-sec" style="margin-top:5px;font-size:10px;padding:5px 10px" onclick="clearSig('guardianSig')">Clear / Borrar</button>
+    </div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-sec" onclick="goTo(5)">← Back</button>
+    <span class="step-ct">Step 7 of 8</span>
+    <button class="btn btn-pri" onclick="goTo(7)">Review & Submit →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 8 — REVIEW & SUBMIT
+══════════════════════════════════════════ -->
+<div class="form-section" id="sec7">
+  <div class="sec-header">
+    <div class="sec-icon">8</div>
+    <div>
+      <h2>Review & Submit</h2>
+      <div class="h-es">Revisión y envío — revisa todo antes de enviar</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Application Summary</div>
+    <div class="card-title-es">Resumen de la solicitud</div>
+    <div id="reviewContent"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Candidate Confirmation & Signature</div>
+    <div class="card-title-es">Confirmación y firma del/de la candidato/a</div>
+    <div class="notice info">
+      By signing below, you confirm that all information in this application is complete and correct, and that you accept the MLQ / EirStudy programme terms and conditions.
+      <div class="n-es">Al firmar, confirmas que toda la información de esta solicitud es completa y veraz, y que aceptas los términos y condiciones del programa MLQ / EirStudy.</div>
+    </div>
+    <div class="fg c2">
+      <div class="field"><label><span class="en">Candidate Name</span><span class="es">Nombre del/de la candidato/a</span></label><input type="text" id="candSigName"></div>
+      <div class="field"><label><span class="en">Date</span><span class="es">Fecha</span></label><input type="date" id="candSigDate"></div>
+    </div>
+    <div class="field" style="margin-top:12px">
+      <label><span class="en">Candidate Signature</span><span class="es">Firma del/de la candidato/a</span></label>
+      <canvas class="sig-canvas" id="candidateSig"></canvas>
+      <button class="btn btn-sec" style="margin-top:5px;font-size:10px;padding:5px 10px" onclick="clearSig('candidateSig')">Clear / Borrar</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Additional Documents</div>
+    <div class="card-title-es">Documentos adicionales — adjunta cualquier documento relevante para el bienestar o asignación del/de la estudiante</div>
+    <div class="photo-drop" onclick="document.getElementById('docsInput').click()">
+      <div class="upicon">📎</div>
+      <div class="en-t">Click to attach additional documents</div>
+      <div class="es-t">Haz clic para adjuntar documentos · PDF, JPG, PNG, máx. 10 MB cada uno</div>
+    </div>
+    <input type="file" id="docsInput" multiple style="display:none">
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-sec" onclick="goTo(6)">← Back</button>
+    <span class="step-ct">Step 8 of 8</span>
+    <button class="btn btn-ok" onclick="submitForm()">Submit Application · Enviar Solicitud ✓</button>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="success-wrap" id="submitSuccess">
+  <div class="succ-icon">✓</div>
+  <h2>Application Submitted!</h2>
+  <p class="en-p">Thank you for submitting your My Language Quest Ireland Programme application. We'll review everything and be in touch within a few working days. We're so excited to be part of this adventure with you!</p>
+  <p class="es-p">¡Gracias por enviar tu solicitud al programa de Irlanda de My Language Quest! Revisaremos todo y estaremos en contacto en pocos días hábiles. ¡Estamos muy emocionados de ser parte de esta aventura contigo!</p>
+  <div style="margin-top:16px;padding:14px 20px;background:var(--green-light);border:1px solid rgba(76,158,12,.3);border-radius:8px;font-size:13px;color:#2a5800;max-width:480px;margin-left:auto;margin-right:auto" class="drive-status">
+    ⏳ Saving to Google Drive... · Guardando en Google Drive...
+  </div>
+  <div style="margin-top:14px">
+    <div class="dest-pill" style="display:inline-flex">📬 Look out for a confirmation email · Revisa tu correo</div>
+  </div>
+</div>
+
+</div><!-- /form-wrap -->
+
+<script>
+// ── APP ID ──
+document.getElementById('appNum').textContent = Math.random().toString(36).substr(2,7).toUpperCase();
+
+// ── NAVIGATION ──
+let cur = 0;
+function goTo(n) {
+  document.getElementById('sec'+cur).classList.remove('active');
+  const ps = document.getElementById('ps'+cur);
+  ps.classList.remove('active'); ps.classList.add('done');
+  cur = n;
+  document.getElementById('sec'+n).classList.add('active');
+  const np = document.getElementById('ps'+n);
+  np.classList.remove('done'); np.classList.add('active');
+  if (n===7) buildReview();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── PILLS ──
+function selPill(el, name) {
+  el.closest('.opt-group').querySelectorAll('.opt-pill').forEach(p=>p.classList.remove('sel'));
+  el.classList.add('sel');
+}
+function toggleChk(el) { el.classList.toggle('sel'); }
+
+// ── YES/NO ──
+function setYN(btn, hid, val) {
+  btn.parentElement.querySelectorAll('.yn-btn').forEach(b=>b.classList.remove('ya','na'));
+  btn.classList.add(val==='yes'||val==='pos' ? 'ya' : 'na');
+  const h=document.getElementById(hid); if(h) h.value=val;
+}
+function showCond(id,show) { const el=document.getElementById(id); if(el) el.classList.toggle('vis',show); }
+
+// ── SCALE ──
+function setSc(btn, val) {
+  btn.parentElement.querySelectorAll('.sc-btn').forEach(b=>{ b.className='sc-btn'; });
+  btn.classList.add('active-'+val);
+}
+
+// ── PHOTOS ──
+function previewPhotos(inp) {
+  const prev=document.getElementById('photoPreview');
+  Array.from(inp.files).forEach(f=>{
+    const r=new FileReader(); r.onload=e=>{ const i=document.createElement('img'); i.src=e.target.result; i.className='photo-thumb'; prev.appendChild(i); }; r.readAsDataURL(f);
+  });
+}
+
+// ── SIBLINGS ──
+function addSibling() {
+  const row=document.createElement('div'); row.className='sib-row';
+  row.innerHTML=`
+    <input type="text" placeholder="Full name / Nombre completo">
+    <select><option>Brother/Hermano</option><option>Sister/Hermana</option><option>Other/Otro</option></select>
+    <input type="date">
+    <select><option>Yes/Sí</option><option>No</option></select>
+    <button class="btn btn-sec" style="padding:5px 8px;font-size:11px" onclick="this.parentElement.remove()">✕</button>`;
+  document.getElementById('siblingRows').appendChild(row);
+}
+
+// ── LANGUAGES ──
+let lc=1;
+function addLanguage() {
+  const tb=document.getElementById('langBody'); const id='l'+lc++;
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td><input type="text" style="width:100%" placeholder="Language / Idioma"></td>
+    <td><input type="number" min="0" max="20" style="width:60px"></td>
+    <td><div class="scale-g">
+      <button class="sc-btn" onclick="setSc(this,'poor')">Poor</button>
+      <button class="sc-btn" onclick="setSc(this,'fair')">Fair</button>
+      <button class="sc-btn" onclick="setSc(this,'good')">Good</button>
+      <button class="sc-btn" onclick="setSc(this,'excellent')">Excellent</button>
+    </div></td>`;
+  tb.appendChild(tr);
+}
+
+// ── MED CONDITIONS ──
+const medList=[
+  {en:'Measles',es:'Sarampión'},{en:'Mumps',es:'Paperas'},{en:'Rubella',es:'Rubéola'},
+  {en:'Chicken Pox',es:'Varicela'},{en:'Poliomyelitis',es:'Poliomielitis'},{en:'Hepatitis',es:'Hepatitis'},
+  {en:'Tuberculosis',es:'Tuberculosis'},{en:'Rheumatic Fever',es:'Fiebre reumática'},
+  {en:'Cough (persistent)',es:'Tos persistente'},{en:'Headaches (recurring)',es:'Dolores de cabeza recurrentes'},
+  {en:'Sleepwalking',es:'Sonambulismo'},{en:'Enuresis',es:'Enuresis'},
+  {en:'Appendicitis',es:'Apendicitis'},{en:'Parasites (internal)',es:'Parásitos internos'}
+];
+function buildMed() {
+  const c=document.getElementById('medConditions');
+  medList.forEach(m=>{
+    const d=document.createElement('div'); d.className='cond-row';
+    d.innerHTML=`<div class="cond-lbl"><div class="en">${m.en}</div><div class="es">${m.es}</div></div>
+      <div class="cond-ctrl"><div class="yn"><div class="yn-btn" onclick="setYN(this,'mc${m.en.replace(/\W/g,'')}','yes')">Yes / Sí</div><div class="yn-btn" onclick="setYN(this,'mc${m.en.replace(/\W/g,'')}','no')">No</div></div><input type="hidden" id="mc${m.en.replace(/\W/g,'')}"></div>`;
+    c.appendChild(d);
+  });
+}
+
+const ongoingList=[
+  {en:'Acne',es:'Acné'},{en:'Allergies',es:'Alergias'},{en:'Asthma',es:'Asma'},
+  {en:'Diabetes',es:'Diabetes'},{en:'Seizure Disorder',es:'Trastorno convulsivo'}
+];
+function buildOngoing() {
+  const c=document.getElementById('ongoingConditions');
+  ongoingList.forEach(m=>{
+    const d=document.createElement('div'); d.className='cond-row';
+    const id='oc'+m.en.replace(/\W/g,'');
+    d.innerHTML=`<div class="cond-lbl"><div class="en" style="font-weight:600">${m.en}</div><div class="es">${m.es}</div></div>
+      <div class="cond-ctrl" style="flex-direction:column;align-items:flex-start;gap:6px">
+        <div class="yn"><div class="yn-btn" onclick="setYN(this,'${id}','yes');this.closest('.cond-ctrl').querySelector('.cond').classList.add('vis')">Yes / Sí</div><div class="yn-btn" onclick="setYN(this,'${id}','no');this.closest('.cond-ctrl').querySelector('.cond').classList.remove('vis')">No</div></div>
+        <input type="hidden" id="${id}">
+        <div class="cond"><input type="text" placeholder="Dosage, frequency and details / Dosis, frecuencia y detalles" style="width:100%;max-width:380px"></div>
+      </div>`;
+    c.appendChild(d);
+  });
+}
+
+const organList=[
+  {en:'Abdominal organs / digestive system',es:'Órganos abdominales / sistema digestivo'},
+  {en:'Heart / blood vessels',es:'Corazón / vasos sanguíneos'},
+  {en:'Lungs / respiratory system',es:'Pulmones / sistema respiratorio'},
+  {en:'Tonsils, nose or throat',es:'Amígdalas, nariz o garganta'},
+  {en:'Bones, joints, locomotor system',es:'Huesos, articulaciones, aparato locomotor'},
+  {en:'Blood / endocrine system',es:'Sangre / sistema endocrino'},
+  {en:'Genito-urinary system',es:'Sistema genitourinario'},
+  {en:'Eyes (vision) / Ears (hearing)',es:'Ojos (visión) / Oídos (audición)'}
+];
+function buildOrgan() {
+  const c=document.getElementById('organSystems');
+  const g=document.createElement('div'); g.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:4px';
+  organList.forEach(m=>{
+    const d=document.createElement('div'); d.className='cond-row'; d.style.borderBottom='none';
+    const id='og'+m.en.replace(/\W/g,'');
+    d.innerHTML=`<div class="cond-lbl"><div class="en" style="font-size:12px">${m.en}</div><div class="es">${m.es}</div></div>
+      <div class="cond-ctrl"><div class="yn"><div class="yn-btn" onclick="setYN(this,'${id}','yes')">Yes / Sí</div><div class="yn-btn" onclick="setYN(this,'${id}','no')">No</div></div><input type="hidden" id="${id}"></div>`;
+    g.appendChild(d);
+  });
+  c.appendChild(g);
+}
+
+// ── IMMUNISATIONS ──
+const vaccines=[['Measles/Sarampión','Tetanus/Tétanos'],['Mumps/Paperas','Poliomyelitis/Poliomielitis'],
+  ['Rubella/Rubéola','Hepatitis A'],['Diphtheria/Difteria','Hepatitis B'],['Pertussis/Tosferina','Meningitis']];
+function buildImmun() {
+  const tb=document.getElementById('immunBody');
+  vaccines.forEach(p=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td><strong style="font-size:12px">${p[0]}</strong></td><td><input type="date" style="width:100%"></td><td><strong style="font-size:12px">${p[1]}</strong></td><td><input type="date" style="width:100%"></td>`;
+    tb.appendChild(tr);
+  });
+}
+
+// ── HOBBIES ──
+const hobbies=[
+  'Theatre / Teatro','Drama','Painting / Art · Pintura','Swimming / Natación','Baseball','Fitness',
+  'Photography / Fotografía','Tennis / Tenis','Basketball / Baloncesto','Gardening / Jardinería',
+  'Playing Cards / Cartas','Travelling / Viajar','Camping','Cinema / Cine','Reading / Lectura',
+  'Museums & Galleries · Museos','Golf','Sailing / Vela','Volleyball / Voleibol','Computers / Informática',
+  'Hiking / Senderismo','Sightseeing / Turismo','Watching TV / Netflix','Cooking / Cocina','Hockey',
+  'Singing / Canto','Writing / Escritura','Cricket','Horse Riding / Equitación','Skiing / Esquí',
+  'Youth Club / Grupos juveniles','Cycling / Ciclismo','Canoeing / Piragüismo','Soccer / Fútbol',
+  'Rugby','Dancing / Baile','Music / Música','Debates','Martial Arts / Artes marciales','Surfing / Surf','Motorsport / Automovilismo'
+];
+function buildHobbies() {
+  const g=document.getElementById('hobbyGrid');
+  hobbies.forEach(h=>{
+    const d=document.createElement('div'); d.className='hobby-item';
+    d.innerHTML=`<span style="flex:1;font-size:12px">${h}</span><div class="hobby-btns"><button class="hb" title="High / Alto" onclick="setHob(this,'h')">H</button><button class="hb" title="Low / Bajo" onclick="setHob(this,'l')">L</button><button class="hb" title="No interest / Sin interés" onclick="setHob(this,'n')">–</button></div>`;
+    g.appendChild(d);
+  });
+}
+function setHob(btn,v) {
+  btn.closest('.hobby-btns').querySelectorAll('.hb').forEach(b=>b.className='hb');
+  btn.classList.add('h'+v);
+}
+
+// ── GRADES TABLE ──
+function buildGrades(id) {
+  const tb=document.getElementById(id);
+  for(let i=0;i<8;i++) {
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td style="color:var(--muted);font-size:11px;width:22px">${i+1}</td>
+      <td><input type="text" style="width:100%" placeholder="Subject / Asignatura"></td>
+      <td><input type="text" style="width:55px" placeholder="—"></td>
+      <td style="color:var(--muted);font-size:11px;width:22px">${i+9}</td>
+      <td><input type="text" style="width:100%" placeholder="Subject / Asignatura"></td>
+      <td><input type="text" style="width:55px" placeholder="—"></td>`;
+    tb.appendChild(tr);
+  }
+}
+
+// ── LANG COMPETENCY ──
+const lSkills=[{en:'Reading',es:'Lectura'},{en:'Writing / Redacción',es:'Escritura'},{en:'Speaking / Hablar',es:'Expresión oral'},{en:'Listening / Comprehension',es:'Comprensión auditiva'}];
+const lLevels=[{en:'Poor',es:'Bajo'},{en:'Fair',es:'Regular'},{en:'Good',es:'Bueno'},{en:'Excellent',es:'Excelente'}];
+function buildLangComp() {
+  const tb=document.getElementById('langCompBody');
+  lSkills.forEach(s=>{
+    const tr=document.createElement('tr');
+    const btns=lLevels.map(l=>`<button class="sc-btn" style="font-size:10px;padding:4px 5px" onclick="setSc(this,'${l.en.toLowerCase()}')">${l.en}<br><span style="font-size:9px;opacity:.7">${l.es}</span></button>`).join('');
+    tr.innerHTML=`<td><strong>${s.en}</strong><br><span style="font-size:11px;color:var(--muted);font-style:italic">${s.es}</span></td><td><div class="scale-g">${btns}</div></td><td><div class="scale-g">${btns.replace(/lc_en/g,'lc_ot')}</div></td>`;
+    tb.appendChild(tr);
+  });
+}
+
+// ── FAMILY ACTIVITIES ──
+const famActs=[
+  {en:'Meals',es:'Comidas juntos'},{en:'Sports',es:'Deporte'},{en:'Theatre / Concerts',es:'Teatro / Conciertos'},
+  {en:'TV',es:'Ver televisión'},{en:'Discussions',es:'Conversaciones'},{en:'Sports Events',es:'Eventos deportivos'},
+  {en:'Outdoor Activities',es:'Actividades al aire libre'},{en:'Church / Religion',es:'Iglesia / Religión'},
+  {en:'Travelling',es:'Viajes'},{en:'Meeting Friends & Family',es:'Ver amigos y familia'},
+  {en:'Volunteer Activities',es:'Voluntariado'},{en:'Music',es:'Música'},
+  {en:'Table Games',es:'Juegos de mesa'},{en:'Other',es:'Otros'}
+];
+const famFreqs=[{en:'Often',es:'A menudo'},{en:'Sometimes',es:'A veces'},{en:'Seldom',es:'Raramente'},{en:'Never',es:'Nunca'}];
+function buildFamActs() {
+  const g=document.getElementById('famActivGrid');
+  g.style.cssText='display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px';
+  famActs.forEach(a=>{
+    const d=document.createElement('div');
+    d.innerHTML=`<div style="font-size:12px;font-weight:600;margin-bottom:3px">${a.en} <span style="font-size:10.5px;font-style:italic;color:var(--muted);font-weight:400">· ${a.es}</span></div>
+      <div class="freq-g">${famFreqs.map(f=>`<div class="fq-btn" onclick="setFq(this)">${f.en}<br><span style="font-size:9px;opacity:.7">${f.es}</span></div>`).join('')}</div>`;
+    g.appendChild(d);
+  });
+}
+function setFq(btn) {
+  btn.closest('.freq-g').querySelectorAll('.fq-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+// ── ADJECTIVES ──
+const adjPers=[
+  {en:'Ambitious',es:'Ambicioso/a'},{en:'Tolerant',es:'Tolerante'},{en:'Humble',es:'Humilde'},{en:'Honest',es:'Honesto/a'},
+  {en:'Musical',es:'Musical'},{en:'Critical',es:'Crítico/a'},{en:'Sensitive',es:'Sensible'},{en:'Creative',es:'Creativo/a'},
+  {en:'Organised',es:'Organizado/a'},{en:'Good Listener',es:'Buen/a oyente'},{en:'Flexible',es:'Flexible'},{en:'Careful',es:'Cuidadoso/a'},
+  {en:'Untidy',es:'Desordenado/a'},{en:'Spontaneous',es:'Espontáneo/a'},{en:'Calm',es:'Tranquilo/a'},{en:'Studious',es:'Estudioso/a'},
+  {en:'Shy',es:'Tímido/a'},{en:'Sporty',es:'Deportivo/a'},{en:'Outgoing',es:'Extrovertido/a'},{en:'Explorative',es:'Explorador/a'},
+  {en:'Punctual',es:'Puntual'},{en:'Energetic',es:'Enérgico/a'},{en:'Risky',es:'Arriesgado/a'},{en:'Patient',es:'Paciente'},
+  {en:'Likes to be the centre of attention',es:'Le gusta ser el centro de atención'},{en:'Well-balanced personality',es:'Personalidad equilibrada'},{en:'Determined when pursuing a goal',es:'Determinado/a al perseguir un objetivo'}
+];
+const adjRel=[
+  {en:'Respectful',es:'Respetuoso/a'},{en:'Friendly',es:'Amigable'},{en:'Decisive',es:'Decidido/a'},{en:'Polite',es:'Educado/a'},
+  {en:'Competitive',es:'Competitivo/a'},{en:'Sincere',es:'Sincero/a'},{en:'Sensitive',es:'Sensible'},{en:'Reserved',es:'Reservado/a'},
+  {en:'Helpful',es:'Servicial'},{en:'Sociable',es:'Sociable'},{en:'Trusting',es:'Confiado/a'},
+  {en:'Leadership-like',es:'Con cualidades de liderazgo'},{en:'Easy going',es:'Fácil de tratar'},
+  {en:'Takes responsibility for others',es:'Asume responsabilidades por los demás'},{en:'Speaks their mind',es:'Dice lo que piensa'},
+  {en:'Concerned about others',es:'Preocupado/a por los demás'},{en:'Needs time to warm up',es:'Necesita tiempo para abrirse'},
+  {en:'Makes first step towards new people',es:'Da el primer paso con personas nuevas'}
+];
+const adjConf=[
+  {en:'Considerate',es:'Considerado/a'},{en:'Withdraws at first',es:'Se retira al principio'},{en:'Cooperative',es:'Cooperativo/a'},
+  {en:'Explosive',es:'Explosivo/a'},{en:'Closed',es:'Cerrado/a'},{en:'Stubborn',es:'Terco/a'},
+  {en:'Courageous',es:'Valiente'},{en:'Unhappy',es:'Se pone triste'},{en:'Passive',es:'Pasivo/a'},
+  {en:'Open to criticism',es:'Abierto/a a la crítica'},{en:'Emotional',es:'Emocional'},
+  {en:'Feels responsible for those involved',es:'Se siente responsable de los involucrados'},
+  {en:'Needs time to think',es:'Necesita tiempo para pensar'},{en:'Actively looks for solutions',es:'Busca soluciones activamente'},
+  {en:'Willing to look for compromises',es:'Dispuesto/a a llegar a acuerdos'},{en:'Tries to reconcile conflicting ideas',es:'Intenta reconciliar ideas opuestas'}
+];
+function buildAdj(id, list, max) {
+  const g=document.getElementById(id);
+  list.forEach(a=>{
+    const c=document.createElement('div'); c.className='adj-chip';
+    c.innerHTML=`${a.en} <span style="font-size:10px;color:var(--muted);font-style:italic">· ${a.es}</span>`;
+    c.onclick=()=>{
+      const active=g.querySelectorAll('.on').length;
+      if(c.classList.contains('on')) { c.classList.remove('on'); }
+      else if(active<max) { c.classList.add('on'); }
+      else { c.animate([{transform:'translateX(-3px)'},{transform:'translateX(3px)'},{transform:'translateX(0)'}],{duration:200}); }
+    };
+    g.appendChild(c);
+  });
+}
+
+// ── SIGNATURES ──
+function initSig(id) {
+  const cv=document.getElementById(id); if(!cv) return;
+  const ctx=cv.getContext('2d');
+  cv.width=cv.offsetWidth||540; cv.height=110;
+  ctx.strokeStyle='#003366'; ctx.lineWidth=2; ctx.lineCap='round';
+  let drawing=false;
+  const pos=e=>{ const r=cv.getBoundingClientRect(); const t=e.touches?e.touches[0]:e; return {x:t.clientX-r.left,y:t.clientY-r.top}; };
+  cv.addEventListener('mousedown',e=>{drawing=true;const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);});
+  cv.addEventListener('mousemove',e=>{if(!drawing) return;const p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke();});
+  cv.addEventListener('mouseup',()=>drawing=false);
+  cv.addEventListener('mouseleave',()=>drawing=false);
+  cv.addEventListener('touchstart',e=>{e.preventDefault();drawing=true;const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);},{passive:false});
+  cv.addEventListener('touchmove',e=>{e.preventDefault();if(!drawing) return;const p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke();},{passive:false});
+  cv.addEventListener('touchend',()=>drawing=false);
+}
+function clearSig(id) { const cv=document.getElementById(id); cv.getContext('2d').clearRect(0,0,cv.width,cv.height); }
+
+// ── REVIEW ──
+function buildReview() {
+  const fv=id=>(document.getElementById(id)||{}).value||'—';
+  document.getElementById('reviewContent').innerHTML=`
+    <div class="rv-sec"><h3>Student / Estudiante</h3><div class="rv-grid">
+      <div class="rv-item"><div class="rl">Full Name / Nombre completo</div><div class="rv">${fv('firstName')} ${fv('lastName')}</div></div>
+      <div class="rv-item"><div class="rl">Date of Birth / F. nacimiento</div><div class="rv">${fv('dob')}</div></div>
+      <div class="rv-item"><div class="rl">Email</div><div class="rv">${fv('email')}</div></div>
+      <div class="rv-item"><div class="rl">Mobile / Móvil</div><div class="rv">${fv('mobile')}</div></div>
+      <div class="rv-item"><div class="rl">City / Ciudad</div><div class="rv">${fv('city')}, ${fv('country')}</div></div>
+    </div></div>
+    <div class="rv-sec"><h3>Guardian 1 / Tutor/a 1</h3><div class="rv-grid">
+      <div class="rv-item"><div class="rl">Name / Nombre</div><div class="rv">${fv('g1first')} ${fv('g1last')}</div></div>
+      <div class="rv-item"><div class="rl">Email</div><div class="rv">${fv('g1email')}</div></div>
+      <div class="rv-item"><div class="rl">Mobile / Móvil</div><div class="rv">${fv('g1mobile')}</div></div>
+    </div></div>
+    <div class="rv-sec"><h3>School / Colegio</h3><div class="rv-grid">
+      <div class="rv-item"><div class="rl">School / Colegio</div><div class="rv">${fv('schoolName')}</div></div>
+      <div class="rv-item"><div class="rl">Current Grade / Curso</div><div class="rv">${fv('currentGrade')}</div></div>
+      <div class="rv-item"><div class="rl">Graduation / Graduación</div><div class="rv">${fv('gradYear')}</div></div>
+    </div></div>
+    <div class="rv-sec"><h3>Programme / Programa</h3><div class="rv-grid">
+      <div class="rv-item"><div class="rl">Destination / Destino</div><div class="rv">Ireland / Irlanda</div></div>
+      <div class="rv-item"><div class="rl">Provider</div><div class="rv">IER Study</div></div>
+      <div class="rv-item"><div class="rl">Application ID</div><div class="rv">MLQ-IRL-${document.getElementById('appNum').textContent}</div></div>
+    </div></div>`;
+}
+
+// ── COLLECT ALL FORM DATA ──
+function collectData() {
+  const fv = id => (document.getElementById(id)||{}).value || '';
+  const appId = document.getElementById('appNum').textContent;
+
+  // Selected pills / adj chips
+  const selPills = (groupName) => {
+    const sel = document.querySelectorAll(`.opt-pill.sel input[name="${groupName}"]`);
+    return Array.from(sel).map(i => i.closest('.opt-pill').textContent.trim()).join(', ');
+  };
+  const selAdj = (containerId) => {
+    return Array.from(document.querySelectorAll(`#${containerId} .adj-chip.on`))
+      .map(c => c.textContent.split('·')[0].trim()).join(', ');
+  };
+  const selHobbies = () => {
+    const items = document.querySelectorAll('.hobby-item');
+    const h=[], l=[];
+    items.forEach(item => {
+      const name = item.querySelector('span').textContent.trim();
+      if (item.querySelector('.hb.hh')) h.push(name);
+      else if (item.querySelector('.hb.hl')) l.push(name);
+    });
+    return { high: h.join(', '), low: l.join(', ') };
+  };
+  const sigData = id => { try { return document.getElementById(id).toDataURL('image/png'); } catch(e){ return ''; } };
+  const hobbies = selHobbies();
+
+  // Grades helper
+  const getGrades = tbodyId => {
+    const rows = document.querySelectorAll(`#${tbodyId} tr`);
+    const out = [];
+    rows.forEach(row => {
+      const inputs = row.querySelectorAll('input[type=text]');
+      for (let i = 0; i < inputs.length; i += 2) {
+        const subj = inputs[i]?.value || '';
+        const grade = inputs[i+1]?.value || '';
+        if (subj) out.push(`${subj}: ${grade}`);
+      }
+    });
+    return out.join(' | ');
+  };
+
+  // Medical conditions
+  const getMedConds = () => {
+    const rows = document.querySelectorAll('#medConditions .cond-row');
+    return Array.from(rows).map(row => {
+      const label = row.querySelector('.en')?.textContent || '';
+      const val = row.querySelector('.yn-btn.ya') ? 'Yes' : (row.querySelector('.yn-btn.na') ? 'No' : '');
+      return `${label}: ${val}`;
+    }).join(' | ');
+  };
+
+  // Family activities
+  const getFamActs = () => {
+    const items = document.querySelectorAll('#famActivGrid > div');
+    return Array.from(items).map(item => {
+      const name = item.querySelector('div').textContent.split('·')[0].trim();
+      const active = item.querySelector('.fq-btn.on');
+      return `${name}: ${active ? active.textContent.split('\n')[0].trim() : ''}`;
+    }).join(' | ');
+  };
+
+  return {
+    appId: `MLQ-IRL-${appId}`,
+    submittedAt: new Date().toISOString(),
+    // Section 1
+    firstName: fv('firstName'), lastName: fv('lastName'),
+    middleName: fv('middleName'), preferredName: fv('preferredName'),
+    gender: fv('gender'), dob: fv('dob'),
+    height: fv('height'), weight: fv('weight'),
+    citizenship: fv('citizenship'), residency: fv('residency'),
+    address: fv('address'), city: fv('city'), state: fv('state'),
+    postcode: fv('postcode'), country: fv('country'),
+    mobile: fv('mobile'), homePhone: fv('homePhone'), email: fv('email'),
+    contactMethod: selPills('contactM'),
+    ec1name: fv('ec1name'), ec1rel: fv('ec1rel'), ec1email: fv('ec1email'), ec1phone: fv('ec1phone'),
+    ec2name: fv('ec2name'), ec2rel: fv('ec2rel'), ec2email: fv('ec2email'), ec2phone: fv('ec2phone'),
+    religion: fv('religion'), religFreq: fv('religFreq'), religReq: fv('religReq'),
+    // Section 2
+    familyDesc: fv('familyDesc'),
+    g1type: selPills('g1t'), g1first: fv('g1first'), g1last: fv('g1last'),
+    g1occ: fv('g1occ'), g1email: fv('g1email'), g1mobile: fv('g1mobile'),
+    g1eng: fv('g1eng'), g1cust: fv('g1cust'),
+    g2type: selPills('g2t'), g2first: fv('g2first'), g2last: fv('g2last'),
+    g2occ: fv('g2occ'), g2email: fv('g2email'), g2mobile: fv('g2mobile'),
+    g2eng: fv('g2eng'), g2cust: fv('g2cust'),
+    prevEx: fv('prevEx'), prevExOrg: fv('prevExOrg'), prevExCountry: fv('prevExCountry'),
+    prevExWhen: fv('prevExWhen'), prevExOpinion: fv('prevExOpinion'),
+    // Section 3
+    schoolName: fv('schoolName'), schoolAddr: fv('schoolAddr'),
+    schoolCity: fv('schoolCity'), schoolCountry: fv('schoolCountry'),
+    schoolPhone: fv('schoolPhone'), schoolEmail: fv('schoolEmail'),
+    currentGrade: fv('currentGrade'), gradYear: fv('gradYear'),
+    academicStanding: fv('academicStanding'), primaryLang: fv('primaryLang'),
+    // Section 4
+    bp: fv('bp'), pulse: fv('pulse'), resp: fv('resp'), bloodType: fv('bloodType'),
+    vitAbn: fv('vitAbn'), vitAbnDesc: fv('vitAbnDesc'),
+    medConditions: getMedConds(),
+    medDetails: fv('medDetails'),
+    hosp: fv('hosp'), hospDesc: fv('hospDesc'),
+    meds: fv('meds'), medsDesc: fv('medsDesc'),
+    psych: fv('psych'), emotHist: fv('emotHist'),
+    healthLim: fv('healthLim'), healthLimDesc: fv('healthLimDesc'),
+    glasses: fv('glasses'), dentalDate: fv('dentalDate'),
+    braces: fv('braces'), ortho: fv('ortho'), orthoFreq: fv('orthoFreq'),
+    physicianName: fv('physicianName'), physicianDate: fv('physicianDate'),
+    physicianSig: sigData('physicianSig'),
+    // Section 5
+    weekday: fv('weekday'), weekend: fv('weekend'),
+    petReason: fv('petReason'), diet: fv('diet'), dietDesc: fv('dietDesc'),
+    smoke: fv('smoke'), hostLetter: fv('hostLetter'),
+    hobbiesHigh: hobbies.high, hobbiesLow: hobbies.low,
+    otherInt1: fv('otherInt1'), otherInt2: fv('otherInt2'),
+    // Section 6
+    acName: fv('acName'), acGrad: fv('acGrad'), acSchool: fv('acSchool'),
+    acPrincipal: fv('acPrincipal'), acCoord: fv('acCoord'),
+    acYear: fv('acYear'), acGpa: fv('acGpa'), acRank: fv('acRank'),
+    acPrimYrs: fv('acPrimYrs'), acSecYrs: fv('acSecYrs'),
+    gradesCurrent: getGrades('gradesCurrentBody'),
+    gradesPrev1: getGrades('gradesPrev1Body'),
+    gradesPrev2: getGrades('gradesPrev2Body'),
+    schoolComment: fv('schoolComment'), knownHow: fv('knownHow'),
+    schoolRec: fv('schoolRec'),
+    officialName: fv('officialName'), officialEmail: fv('officialEmail'),
+    officialDate: fv('officialDate'), officialStamp: fv('officialStamp'),
+    officialSig: sigData('officialSig'),
+    failed: fv('failed'), failedDesc: fv('failedDesc'),
+    absences: fv('absences'), absencesDesc: fv('absencesDesc'),
+    // Section 7
+    psName: fv('psName'), psCountry: fv('psCountry'), psAge: fv('psAge'),
+    famSituation: fv('famSituation'), famActivities: getFamActs(),
+    awayBehav: fv('awayBehav'),
+    adjPersonal: selAdj('adjPersonal'),
+    personalityDesc: fv('personalityDesc'),
+    adjRelations: selAdj('adjRelations'),
+    relationsDesc: fv('relationsDesc'),
+    adjConflict: selAdj('adjConflict'),
+    challengeDesc: fv('challengeDesc'),
+    disorderComments: fv('disorderComments'),
+    guardianName: fv('guardianName'), guardianDate: fv('guardianDate'),
+    guardianSig: sigData('guardianSig'),
+    // Section 8
+    candSigName: fv('candSigName'), candSigDate: fv('candSigDate'),
+    candidateSig: sigData('candidateSig'),
+  };
+}
+
+// ── SUBMIT ──
+async function submitForm() {
+  const btn = document.querySelector('#sec7 .btn-ok');
+  btn.textContent = 'Sending... / Enviando...';
+  btn.disabled = true;
+
+  const data = collectData();
+
+  // ── STEP 1: Send to Google Apps Script ──
+  const GAS_URL = 'https://script.google.com/macros/s/AKfycbxM9Se4mimNVJEsONu6IRxb-at2M97Ltv8nWXp5YvKj3UCXpkwpvuE6RJQLXK_vu8fgYg/exec'; // ← Replace this after setup
+
+  let driveSuccess = false;
+  try {
+    const resp = await fetch(GAS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    driveSuccess = true;
+  } catch(err) {
+    console.warn('Google Drive upload failed:', err);
+  }
+
+  // ── STEP 2: Show success screen ──
+  document.getElementById('sec7').style.display = 'none';
+  const succ = document.getElementById('submitSuccess');
+  succ.classList.add('vis');
+  if (driveSuccess) {
+    succ.querySelector('.drive-status').innerHTML = '✅ Your application has been saved to MLQ Google Drive. <br><em>Tu solicitud ha sido guardada en Google Drive de MLQ.</em>';
+  } else {
+    succ.querySelector('.drive-status').innerHTML = '⚠️ Could not reach Google Drive automatically — please contact MLQ. <br><em>No se pudo guardar automáticamente. Contacta con MLQ.</em>';
+  }
+
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── INIT ──
+window.addEventListener('DOMContentLoaded',()=>{
+  buildMed(); buildOngoing(); buildOrgan(); buildImmun(); buildHobbies();
+  buildGrades('gradesCurrentBody'); buildGrades('gradesPrev1Body'); buildGrades('gradesPrev2Body');
+  buildLangComp(); buildFamActs();
+  buildAdj('adjPersonal',adjPers,7); buildAdj('adjRelations',adjRel,7); buildAdj('adjConflict',adjConf,7);
+  const today=new Date().toISOString().split('T')[0];
+  ['candSigDate','guardianDate','officialDate'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=today; });
+  setTimeout(()=>{ ['physicianSig','officialSig','guardianSig','candidateSig'].forEach(initSig); },400);
+});
+</script>
+</body>
+</html>
